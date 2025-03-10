@@ -35,7 +35,7 @@ const HomeSection = () => {
 
   const getProducts = async () => {
     const response = await axios.get(
-      "https://furniture-server-ntpy.vercel.app/api/products/category?category=Chair"
+      "https://furniture-server-theta.vercel.app/api/products/category?category=Chair"
     );
     const product = await response.data;
     setProductData(product);
@@ -43,7 +43,7 @@ const HomeSection = () => {
 
   const allProductData = async () => {
     const response = await axios.get(
-      "https://furniture-server-ntpy.vercel.app/api/products"
+      "https://furniture-server-theta.vercel.app/api/products"
     );
     const allProduct = await response.data;
     const filteredData = allProduct.filter(

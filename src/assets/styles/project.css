@@ -13,15 +13,18 @@
     display: flex;
     flex-direction: column;
     padding: 32px 0px;
+    transition: all 0.2s ease;
     .project-header {
       display: flex;
       justify-content: center;
       align-items: center;
       color: #ebf8f9;
       margin: 0 0 35px 0;
+      transition: all 0.2s ease;
       h2 {
         font-size: 30px;
         font-weight: 500;
+        transition: all 0.2s ease;
       }
     }
     .project-list {
@@ -32,6 +35,7 @@
       border-bottom: 1px solid #ebf8f9;
       padding: 24px 0px;
       gap: 20px;
+      transition: all 0.2s ease;
       li {
         width: 50%;
         display: flex;
@@ -39,6 +43,7 @@
         padding: 0px 16px;
         color: #ebf8f9;
         font-size: 24px;
+        transition: all 0.2s ease;
       }
       li:first-child {
         justify-content: flex-start;
@@ -73,6 +78,7 @@
       .project-list {
         /* overflow: auto !important; */
         flex-wrap: wrap !important;
+        transition: all 0.2s ease;
         li:first-child {
           width: 100% !important;
         }

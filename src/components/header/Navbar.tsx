@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../assets/images/Logo.png";
 import { Icon } from "@iconify/react/dist/iconify.js";
@@ -6,6 +6,14 @@ import "../../assets/styles/navbar.css";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
+  const [scroll, setScroll] = useState<number>(0);
+  const navRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleScroll = () => [setScroll(window.scrollY)];
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const handleOpen = () => {
     setBurgerMenuOpen(!burgerMenuOpen);
@@ -31,6 +39,11 @@ const Navbar = () => {
       animate={{ y: 0 }}
       transition={{ duration: 0.5 }}
       className="navbar-section"
+      ref={navRef}
+      style={{
+        backgroundColor: scroll === 0 ? "rgba(255, 255, 255, 0.02)" : "#284551",
+        backdropFilter: "blur(5px)",
+      }}
     >
       <motion.nav className="navbar">
         <div className="left-side">

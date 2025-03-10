@@ -108,8 +108,8 @@ const IsSaleSwiper = ({
             ))}
 
         {/* ✅ Scrollbar əlavə edildi */}
-        <div className="swiper-scrollbar"></div>
       </Swiper>
+      <div className="swiper-scrollbar"></div>
     </motion.section>
   );
 };

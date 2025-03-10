@@ -9,24 +9,29 @@
   position: fixed;
   top: 0;
   z-index: 1;
+  transition: all 0.2s ease;
   .navbar {
     max-width: 1388px;
     width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    transition: all 0.2s ease;
     .left-side {
       display: flex;
       align-items: center;
       gap: 30px;
+      transition: all 0.2s ease;
       .logo {
         height: 100%;
+        transition: all 0.2s ease;
       }
     }
     .right-side {
       display: flex;
       align-items: center;
       gap: 20px;
+      transition: all 0.2s ease;
       .btn {
         display: flex;
         justify-content: center;
@@ -38,16 +43,19 @@
         font-weight: 600;
         border-radius: 4px;
         cursor: pointer;
+        transition: all 0.2s ease;
       }
       .primary-btn {
         background-color: transparent;
         color: #daf1f3;
         border: 1px solid #daf1f3;
+        transition: all 0.2s ease;
       }
       .first-btn {
         border: none;
         background-color: #ebf8f9;
         color: #162c36;
+        transition: all 0.2s ease;
       }
       .burger-menu {
         display: none;
@@ -56,14 +64,17 @@
         display: flex;
         align-items: center;
         gap: 20px;
+        transition: all 0.2s ease;
         li {
           position: relative;
+          transition: all 0.2s ease;
         }
         li .nav-link {
           text-decoration: none;
           color: #2d2e2e;
           font-size: 16px;
           font-weight: 600;
+          transition: all 0.2s ease;
         }
         li .nav-link::after {
           content: "";

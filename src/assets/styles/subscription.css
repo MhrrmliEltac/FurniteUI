@@ -191,6 +191,7 @@
     .subs-info {
       width: 100% !important;
       height: fit-content;
+      font-size: 20px !important;
     }
     .subs-email {
       width: 100% !important;

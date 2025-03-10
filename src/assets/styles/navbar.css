@@ -1,0 +1,200 @@
+.navbar-section {
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(5px);
+  position: fixed;
+  top: 0;
+  z-index: 1;
+  .navbar {
+    max-width: 1388px;
+    width: 80%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    .left-side {
+      display: flex;
+      align-items: center;
+      gap: 30px;
+      .logo {
+        height: 100%;
+      }
+    }
+    .right-side {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      .btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: max-content;
+        max-width: 100%;
+        padding: 17px 17px;
+        font-size: 15px;
+        font-weight: 600;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      .primary-btn {
+        background-color: transparent;
+        color: #daf1f3;
+        border: 1px solid #daf1f3;
+      }
+      .first-btn {
+        border: none;
+        background-color: #ebf8f9;
+        color: #162c36;
+      }
+      .burger-menu {
+        display: none;
+      }
+      .menu-list {
+        display: flex;
+        align-items: center;
+        gap: 20px;
+        li {
+          position: relative;
+        }
+        li .nav-link {
+          text-decoration: none;
+          color: #2d2e2e;
+          font-size: 16px;
+          font-weight: 600;
+        }
+        li .nav-link::after {
+          content: "";
+          position: absolute;
+          left: 0%;
+          bottom: 1px;
+          width: 0;
+          height: 2px;
+          background-color: #3a4f39;
+          transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+        }
+
+        li .nav-link:hover::after {
+          width: 100%;
+          left: 0;
+        }
+        li .active::after {
+          width: 100%;
+          background-color: #3a4f39;
+        }
+      }
+    }
+    .burger-menu-list {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .menu-list {
+    display: none !important;
+  }
+  .burger-menu {
+    display: block !important;
+  }
+  .burger-menu-list {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 450px;
+    backdrop-filter: blur(10px);
+    position: absolute;
+    top: 100%;
+    z-index: 1;
+    left: 0;
+    background: rgba(255, 255, 255, 0.5);
+    gap: 20px;
+    .burger-menu-list-item {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      flex-direction: column;
+      li {
+        position: relative;
+      }
+      li .nav-link {
+        text-decoration: none;
+        color: #2d2e2e;
+        font-size: 16px;
+        font-weight: 600;
+      }
+      li .nav-link::after {
+        content: "";
+        position: absolute;
+        left: 0%;
+        bottom: 1px;
+        width: 0;
+        height: 2px;
+        background-color: #3a4f39;
+        transition: width 0.3s ease-in-out, left 0.3s ease-in-out;
+      }
+
+      li .nav-link:hover::after {
+        width: 100%;
+        left: 0;
+      }
+      li .active::after {
+        width: 100%;
+        background-color: #3a4f39;
+      }
+    }
+    .btn {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .right-side {
+    justify-content: end;
+    .btn {
+      display: none !important;
+    }
+  }
+  .burger-menu-list {
+    overflow: auto !important;
+    .btn {
+      border: 1px solid #3a4f39;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: max-content;
+      max-width: 100%;
+      padding: 17px 17px;
+      font-size: 15px;
+      font-weight: 600;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    .primary-btn {
+      background-color: #3a4f39;
+      color: white;
+      transition: 0.4s ease-in;
+    }
+    .first-btn {
+      background-color: white;
+      color: #3a4f39;
+      transition: 0.4s ease-in;
+    }
+  }
+  .navbar {
+    width: 90% !important;
+  }
+}
+
+@media (max-width: 640px) {
+  .burger-menu-list {
+    .btn {
+      width: 90%;
+    }
+  }
+}

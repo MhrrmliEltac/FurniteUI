@@ -1,0 +1,33 @@
+.heading-section {
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 24px 0px;
+  .heading-section-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    h3 {
+      color: #2c6272;
+      font-size: 30px;
+      font-family: "McLaren", sans-serif;
+      font-weight: 500;
+    }
+    button {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 5px;
+      height: 48px;
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      font-size: 16px;
+      font-family: "McLaren", sans-serif;
+      font-weight: 500;
+    }
+  }
+}

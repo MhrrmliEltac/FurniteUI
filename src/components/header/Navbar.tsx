@@ -1,0 +1,157 @@
+import { useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
+import Logo from "../../assets/images/Logo.png";
+import { Icon } from "@iconify/react/dist/iconify.js";
+import "../../assets/styles/navbar.css";
+
+const Navbar = () => {
+  const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
+
+  const handleOpen = () => {
+    setBurgerMenuOpen(!burgerMenuOpen);
+  };
+
+  const handleClose = () => {
+    setBurgerMenuOpen(!burgerMenuOpen);
+  };
+
+  const itemVariant = {
+    initial: { opacity: 0, translateX: -20, translateY: -20 },
+    animate: (index: number) => ({
+      opacity: 1,
+      translateX: 0,
+      translateY: 0,
+      transition: { delay: 0.2 * index },
+    }),
+  };
+
+  return (
+    <motion.section
+      initial={{ y: -100 }}
+      animate={{ y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="navbar-section"
+    >
+      <motion.nav className="navbar">
+        <div className="left-side">
+          <img src={Logo} alt="logo" className="logo" />
+        </div>
+
+        <div className="right-side">
+          <ul className="menu-list">
+            <li>
+              <Icon
+                icon="lucide:search"
+                width="28"
+                height="28"
+                className="icon"
+                style={{ color: "#DAF1F3" }}
+              />
+            </li>
+            <li>
+              <Icon
+                icon="mingcute:shopping-bag-2-line"
+                width="30"
+                height="30"
+                className="icon"
+                style={{ color: "#DAF1F3" }}
+              />
+            </li>
+            <li>
+              <Icon
+                icon="mdi:heart-outline"
+                width="30"
+                height="30"
+                className="icon"
+                style={{ color: "#DAF1F3" }}
+              />
+            </li>
+          </ul>
+          <motion.button className="btn first-btn">Log in</motion.button>
+          <motion.button className="btn primary-btn">
+            Create an Account
+          </motion.button>
+          <div className="burger-menu">
+            {!burgerMenuOpen ? (
+              <Icon
+                icon="iconamoon:menu-burger-horizontal"
+                width="30"
+                height="30"
+                style={{ color: "#DAF1F3" }}
+                onClick={handleOpen}
+                className="icon"
+              />
+            ) : (
+              <Icon
+                icon="proicons:cancel"
+                width="30"
+                height="30"
+                style={{ color: "#DAF1F3" }}
+                onClick={handleClose}
+                className="icon"
+              />
+            )}
+          </div>
+        </div>
+
+        <AnimatePresence>
+          {burgerMenuOpen && (
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.5 }}
+              key="burger-menu-list"
+              className="burger-menu-list"
+            >
+              <ul className="burger-menu-list-item">
+                {[
+                  "lucide:search",
+                  "mingcute:shopping-bag-2-line",
+                  "mdi:heart-outline",
+                ].map((tab, index) => (
+                  <motion.li
+                    variants={itemVariant}
+                    initial="initial"
+                    animate="animate"
+                    exit={{ opacity: 0, translateY: -10 }}
+                    key={index}
+                    custom={index}
+                  >
+                    <Icon
+                      icon={tab}
+                      width="28"
+                      height="28"
+                      className="icon"
+                      style={{ color: "#DAF1F3" }}
+                    />
+                  </motion.li>
+                ))}
+              </ul>
+              <motion.button
+                initial={{ translateX: -20, opacity: 0 }}
+                animate={{ translateX: 0, opacity: 1 }}
+                exit={{ opacity: 0, translateX: -20 }}
+                transition={{ duration: 0.3 }}
+                className="btn first-btn"
+              >
+                Log in
+              </motion.button>
+              <motion.button
+                initial={{ translateX: -20, opacity: 0 }}
+                animate={{ translateX: 0, opacity: 1 }}
+                exit={{ opacity: 0, translateX: -20 }}
+                transition={{ duration: 0.6 }}
+                className="btn primary-btn"
+              >
+                Create an Account
+              </motion.button>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </motion.nav>
+    </motion.section>
+  );
+};
+
+export default Navbar;

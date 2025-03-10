@@ -32,18 +32,22 @@ const ProductSlider = ({
 }: {
   productData: ProductDataType[] | null;
 }) => {
-  const skeletonCount = 5;
-
   return (
     <section className="swiper-section">
       <Swiper
-        slidesPerView={5}
-        spaceBetween={50}
+        slidesPerView={1}
+        spaceBetween={20}
         scrollbar={{ draggable: true }}
         modules={[Scrollbar]}
+        breakpoints={{
+          480: { slidesPerView: 2 },
+          768: { slidesPerView: 3 },
+          1024: { slidesPerView: 4 },
+          1200: { slidesPerView: 5 },
+        }}
       >
         {productData && productData.length > 0
-          ? productData.map((product: ProductDataType) => (
+          ? productData.map((product) => (
               <SwiperSlide key={product._id}>
                 <div className="slider-head">
                   <img
@@ -85,7 +89,7 @@ const ProductSlider = ({
                 </div>
               </SwiperSlide>
             ))
-          : Array.from({ length: skeletonCount }).map((_, index) => (
+          : Array.from({ length: 5 }).map((_, index) => (
               <SwiperSlide key={index}>
                 <Stack spacing={1}>
                   <Skeleton variant="rounded" width={250} height={200} />
@@ -99,9 +103,6 @@ const ProductSlider = ({
                 </Stack>
               </SwiperSlide>
             ))}
-
-        {/* ✅ Scrollbar əlavə edildi */}
-        <div className="swiper-scrollbar"></div>
       </Swiper>
     </section>
   );

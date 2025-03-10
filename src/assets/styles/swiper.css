@@ -54,16 +54,30 @@
         }
       }
     }
+  }
+}
 
-    .swiper-scrollbar {
-      left: 0;
-      border-radius: 25px;
-      height: 2px;
-    }
-    .swiper-scrollbar-drag {
-      background: #89cdd7;
-      width: 35% !important;
-      border-radius: 25px;
-    }
+.swiper-scrollbar {
+  left: 0;
+  right: 0; /* Ensure it's on the right */
+  position: absolute; /* Position it correctly */
+  bottom: 10px; /* Keep it near the bottom */
+  border-radius: 25px;
+  height: 2px;
+}
+
+.swiper-scrollbar-drag {
+  background: #89cdd7;
+  width: 35% !important;
+  border-radius: 25px;
+}
+
+@media (max-width: 767px) {
+  .swiper {
+    padding-right: 10px; /* Add padding if necessary */
+  }
+  .swiper-scrollbar {
+    bottom: 5px; /* Adjust bottom distance for mobile */
+    height: 3px; /* Optionally increase scrollbar thickness */
   }
 }

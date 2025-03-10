@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../assets/images/Logo.png";
+import LogoDark from "../../assets/images/Logo-fill.png";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import "../../assets/styles/navbar.css";
 
@@ -41,13 +42,17 @@ const Navbar = () => {
       className="navbar-section"
       ref={navRef}
       style={{
-        backgroundColor: scroll === 0 ? "rgba(255, 255, 255, 0.02)" : "#284551",
+        backgroundColor: scroll === 0 ? "rgba(255, 255, 255, 0.02)" : "#fff",
         backdropFilter: "blur(5px)",
       }}
     >
       <motion.nav className="navbar">
         <div className="left-side">
-          <img src={Logo} alt="logo" className="logo" />
+          <img
+            src={scroll === 0 ? Logo : LogoDark}
+            alt="logo"
+            className="logo"
+          />
         </div>
 
         <div className="right-side">
@@ -58,7 +63,7 @@ const Navbar = () => {
                 width="28"
                 height="28"
                 className="icon"
-                style={{ color: "#DAF1F3" }}
+                style={{ color: scroll === 0 ? "#DAF1F3" : "#284551" }}
               />
             </li>
             <li>
@@ -67,7 +72,7 @@ const Navbar = () => {
                 width="30"
                 height="30"
                 className="icon"
-                style={{ color: "#DAF1F3" }}
+                style={{ color: scroll === 0 ? "#DAF1F3" : "#284551" }}
               />
             </li>
             <li>
@@ -76,12 +81,26 @@ const Navbar = () => {
                 width="30"
                 height="30"
                 className="icon"
-                style={{ color: "#DAF1F3" }}
+                style={{ color: scroll === 0 ? "#DAF1F3" : "#284551" }}
               />
             </li>
           </ul>
-          <motion.button className="btn first-btn">Log in</motion.button>
-          <motion.button className="btn primary-btn">
+          <motion.button
+            className="btn first-btn"
+            style={{
+              backgroundColor: scroll === 0 ? "#EBF8F9" : "#284551",
+              color: scroll === 0 ? "#284551" : "#EBF8F9",
+            }}
+          >
+            Log in
+          </motion.button>
+          <motion.button
+            className="btn primary-btn"
+            style={{
+              color: scroll === 0 ? "#EBF8F9" : "#284551",
+              border: scroll === 0 ? "1px solid #EBF8F9" : "1px solid #284551",
+            }}
+          >
             Create an Account
           </motion.button>
           <div className="burger-menu">

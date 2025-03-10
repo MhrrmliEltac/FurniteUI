@@ -15,6 +15,11 @@ const Subscription = () => {
   const sendEmail = async () => {
     let regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
+    if (!email) {
+      toast.error("Enter email");
+      return;
+    }
+
     if (!regex.test(email)) {
       toast.error("Email is not valid!");
       return;

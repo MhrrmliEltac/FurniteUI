@@ -150,7 +150,7 @@
       margin: 0 !important;
     }
     .subs-email {
-      width: 100% !important;
+      width: 80% !important;
       justify-content: center;
     }
   }
@@ -169,6 +169,7 @@
     width: 50% !important;
   }
   .subs-email-info {
+    width: 80% !important;
     justify-content: center;
     height: 150px !important;
     span {

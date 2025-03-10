@@ -150,7 +150,7 @@
       margin: 0 !important;
     }
     .subs-email {
-      width: 80% !important;
+      width: 100% !important;
       justify-content: center;
     }
   }
@@ -164,7 +164,7 @@
     }
   }
   .subs-info {
-    font-size: 20px !important;
+    font-size: 30px !important;
     margin: 0 !important;
     width: 50% !important;
   }

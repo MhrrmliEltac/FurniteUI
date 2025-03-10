@@ -71,21 +71,24 @@
   .projects {
     div {
       .project-list {
-        overflow: auto !important;
+        /* overflow: auto !important; */
+        flex-wrap: wrap !important;
         li:first-child {
           width: 100% !important;
         }
         li:nth-child(2) {
           width: 100% !important;
+          justify-content: flex-start !important;
         }
         li:nth-child(3) {
           width: fit-content !important;
         }
         li:last-child {
           width: 100px !important;
+          width: 50px !important;
+          height: 50px !important;
         }
       }
     }
   }
 }
-

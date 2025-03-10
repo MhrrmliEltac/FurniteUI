@@ -54,7 +54,7 @@ const Subscription = () => {
       transition={{ duration: 1 }}
       className="subscription-section"
     >
-      <div>
+      <div className="subs-box">
         <img src={Overrlay} alt="" loading="lazy" />
         <div className="overlay">
           <div className="subs-info">

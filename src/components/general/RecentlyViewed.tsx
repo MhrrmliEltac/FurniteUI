@@ -9,6 +9,13 @@ import Stack from "@mui/material/Stack";
 
 interface ProductDataType {
   _id: string;
+  itemId: item;
+  userId: string;
+  viewedAt: string;
+}
+
+interface item {
+  _id: string;
   name: string;
   category: string;
   subCategory: string;
@@ -31,7 +38,7 @@ interface ShowProps {
   isVisible?: boolean;
 }
 
-const ProductSlider = ({
+const RecentlyViewed = ({
   productData,
   show,
 }: {
@@ -54,16 +61,16 @@ const ProductSlider = ({
       >
         {productData && productData.length > 0
           ? productData.map((product) => (
-              <SwiperSlide key={product._id}>
+              <SwiperSlide key={product.itemId._id}>
                 <div className="slider-head">
                   <img
-                    src={product.images[0] || "/default-image.jpg"}
-                    alt={product.name}
+                    src={product.itemId.images[0] || "/default-image.jpg"}
+                    alt={product.itemId.name}
                   />
                 </div>
                 <div className="slider-body">
                   <div className="slider-heading">
-                    <h4>{product.name}</h4>
+                    <h4>{product.itemId.name}</h4>
                     <Icon
                       icon="mdi:heart"
                       width="24"
@@ -73,10 +80,10 @@ const ProductSlider = ({
                   </div>
                   <div className="color-box">
                     <p className="product-color-count">
-                      {product.colors.length} Colors
+                      {product.itemId.colors.length} Colors
                     </p>
                     {show?.isVisible &&
-                      product.colors.map((color, index) => (
+                      product.itemId.colors.map((color, index) => (
                         <span
                           key={index}
                           style={{
@@ -94,7 +101,7 @@ const ProductSlider = ({
                   </div>
                   <div className="price-box">
                     <p className="product-price">
-                      {product.isOnSale ? (
+                      {product.itemId.isOnSale ? (
                         <>
                           <span
                             style={{
@@ -103,12 +110,12 @@ const ProductSlider = ({
                               marginRight: "8px",
                             }}
                           >
-                            ${product.price}
+                            ${product.itemId.price}
                           </span>
-                          ${product.discountPrice}
+                          ${product.itemId.discountPrice}
                         </>
                       ) : (
-                        `$${product.price}`
+                        `$${product.itemId.price}`
                       )}
                     </p>
                     <div className="icon-box">
@@ -145,4 +152,4 @@ const ProductSlider = ({
   );
 };
 
-export default ProductSlider;
+export default RecentlyViewed;

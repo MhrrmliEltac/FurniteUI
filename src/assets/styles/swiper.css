@@ -42,15 +42,35 @@
             font-weight: 600;
           }
         }
-        .product-color-count {
-          color: #333e47;
-          font-weight: 600;
-          font-size: 15px;
+        .color-box {
+          display: flex;
+          justify-content: space-between;
+          .product-color-count {
+            color: #333e47;
+            font-weight: 600;
+            font-size: 15px;
+          }
         }
-        .product-price {
-          color: #3692a4;
-          font-size: 24px;
-          font-weight: 600;
+        .price-box {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          .product-price {
+            color: #3692a4;
+            font-size: 24px;
+            font-weight: 600;
+          }
+          .icon-box {
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #ebf8f9;
+            padding: 6px;
+            .icon {
+              cursor: pointer;
+            }
+          }
         }
       }
     }

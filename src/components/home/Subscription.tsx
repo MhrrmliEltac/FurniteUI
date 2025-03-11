@@ -28,7 +28,7 @@ const Subscription = () => {
     try {
       setIsPending(true);
       const response = await axios.post(
-        "http://localhost:4000/api/send-email",
+        "https://furniture-server-theta.vercel.app/api/send-email",
         {
           email: email,
         }

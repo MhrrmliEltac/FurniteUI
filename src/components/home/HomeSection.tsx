@@ -60,7 +60,7 @@ const HomeSection = () => {
   return (
     <motion.section className="home-section">
       <Heading title="Popular Chairs" btnTitle="View All" />
-      <ProductSlider productData={productData} />
+      <ProductSlider productData={productData} show={{ isVisible: false }} />
       <Heading title="Products on Sale" btnTitle="View All" />
       <IsSaleSwiper productData={isSaleProduct} />
     </motion.section>

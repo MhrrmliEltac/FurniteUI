@@ -44,24 +44,24 @@ const Footer = () => {
           <li>
             <Icon
               icon="ic:baseline-facebook"
-              width="28"
-              height="28"
+              width="32"
+              height="32"
               style={{ color: "#F9FAFB", cursor: "pointer" }}
             />
           </li>
           <li>
             <Icon
               icon="mdi:youtube"
-              width="28"
-              height="28"
+              width="32"
+              height="32"
               style={{ color: "#F9FAFB", cursor: "pointer" }}
             />
           </li>
           <li>
             <Icon
               icon="mdi:instagram"
-              width="28"
-              height="28"
+              width="32"
+              height="32"
               style={{ color: "#F9FAFB", cursor: "pointer" }}
             />
           </li>

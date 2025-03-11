@@ -3,16 +3,17 @@ import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../assets/images/Logo.png";
 import LogoDark from "../../assets/images/Logo-fill.png";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import "../../assets/styles/navbar.css";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Category from "../home/Category";
+import "../../assets/styles/navbar.css";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
   const [scroll, setScroll] = useState<number>(0);
+  const navRef = useRef<HTMLDivElement | null>(null);
+  const navigate = useNavigate();
   const location = useLocation();
   const path = location.pathname;
-  const navRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
     const handleScroll = () => [setScroll(window.scrollY)];
@@ -58,6 +59,7 @@ const Navbar = () => {
             src={scroll === 0 && path === "/" ? Logo : LogoDark}
             alt="logo"
             className="logo"
+            onClick={() => navigate("/")}
           />
         </div>
 
@@ -94,6 +96,7 @@ const Navbar = () => {
                 style={{
                   color: scroll === 0 && path === "/" ? "#DAF1F3" : "#284551",
                 }}
+                onClick={() => navigate("/wishlist")}
               />
             </li>
           </ul>

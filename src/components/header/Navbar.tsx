@@ -128,7 +128,7 @@ const Navbar = () => {
                 icon="iconamoon:menu-burger-horizontal"
                 width="30"
                 height="30"
-                style={{ color: "#DAF1F3" }}
+                style={{ color: "#284551" }}
                 onClick={handleOpen}
                 className="icon"
               />
@@ -137,7 +137,7 @@ const Navbar = () => {
                 icon="proicons:cancel"
                 width="30"
                 height="30"
-                style={{ color: "#DAF1F3" }}
+                style={{ color: "#284551" }}
                 onClick={handleClose}
                 className="icon"
               />

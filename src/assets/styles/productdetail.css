@@ -20,15 +20,18 @@
         gap: 20px;
         width: 100%;
         .left-image {
+          transition: all 0.5s ease;
           img {
             width: 96px;
             height: 96px;
             border-radius: 12px;
             border: 1px solid #282828;
             object-fit: cover;
+            transition: all 0.5s ease;
           }
         }
         .right-image {
+          transition: all 0.5s ease;
           img {
             aspect-ratio: 1/1;
             width: 100%;
@@ -36,6 +39,7 @@
             border-radius: 20px;
             height: 520px;
             box-shadow: 0px 2px 4px 0px rgba(33, 33, 33, 0.22);
+            transition: all 0.5s ease;
           }
         }
       }
@@ -46,6 +50,7 @@
         flex-direction: column;
         width: 100%;
         padding-bottom: 3rem;
+        transition: all 0.5s ease;
         .skeleton {
           display: flex;
           justify-content: space-between;
@@ -54,6 +59,7 @@
           display: flex;
           flex-direction: column;
           gap: 20px;
+          transition: all 0.5s ease;
           .product-id {
             font-size: 20px;
             color: #b0bfc9;
@@ -188,9 +194,11 @@
       justify-content: space-between;
       align-items: start;
       margin: 3rem 0px;
+      transition: all 0.5s ease;
       h4 {
         color: #333e47;
         font-size: 20px;
+        transition: all 0.5s ease;
       }
 
       div {
@@ -199,20 +207,24 @@
         gap: 20px;
         justify-content: start;
         align-items: flex-start;
+        transition: all 0.5s ease;
       }
       .product-description {
         width: 30%;
         border-right: 1px solid #eceff2;
+        transition: all 0.5s ease;
         p {
           width: 90%;
           color: #425462;
           font-weight: 600;
           font-size: 18px;
+          transition: all 0.5s ease;
         }
       }
       .product-material {
         width: 30%;
         border-right: 1px solid #eceff2;
+        transition: all 0.5s ease;
         .material-list {
           display: flex;
           flex-direction: column;
@@ -220,10 +232,12 @@
           color: #425462;
           font-weight: 600;
           font-size: 18px;
+          transition: all 0.5s ease;
         }
       }
       .product-dimension {
         width: 30%;
+        transition: all 0.5s ease;
         .dimension-list {
           display: flex;
           flex-direction: column;
@@ -231,6 +245,7 @@
           color: #425462;
           font-weight: 600;
           font-size: 18px;
+          transition: all 0.5s ease;
         }
       }
     }

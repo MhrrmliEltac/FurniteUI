@@ -241,7 +241,19 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .right-image {
+    img {
+      height: 100% !important;
+    }
+  }
+}
+
 @media (max-width: 910px) {
+  .product-detail-footer-section {
+    width: 90% !important;
+    margin: 3rem auto !important;
+  }
   .product-detail {
     flex-wrap: wrap;
     .image-box-grid {

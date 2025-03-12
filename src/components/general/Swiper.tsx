@@ -6,6 +6,7 @@ import "../../assets/styles/swiper.css";
 import { Scrollbar } from "swiper/modules";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import { createSearchParams, useNavigate } from "react-router-dom";
 
 interface ProductDataType {
   _id: string;
@@ -38,6 +39,8 @@ const ProductSlider = ({
   productData: ProductDataType[] | null;
   show: ShowProps;
 }) => {
+  const navigate = useNavigate();
+
   return (
     <section className="swiper-section">
       <Swiper
@@ -54,7 +57,17 @@ const ProductSlider = ({
       >
         {productData && productData.length > 0
           ? productData.map((product) => (
-              <SwiperSlide key={product._id}>
+              <SwiperSlide
+                key={product._id}
+                onClick={() =>
+                  navigate({
+                    pathname: "/product-detail",
+                    search: `${createSearchParams({
+                      id: product._id,
+                    })}`,
+                  })
+                }
+              >
                 <div className="slider-head">
                   <img
                     src={product.images[0] || "/default-image.jpg"}

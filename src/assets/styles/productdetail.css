@@ -4,7 +4,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 15rem 0px;
+  flex-direction: column;
+  margin: 12rem 0px 20px 0px;
   .product-detail-box {
     width: 100%;
     max-width: 1560px;
@@ -45,6 +46,10 @@
         flex-direction: column;
         width: 100%;
         padding-bottom: 3rem;
+        .skeleton {
+          display: flex;
+          justify-content: space-between;
+        }
         .product-info-container {
           display: flex;
           flex-direction: column;
@@ -176,6 +181,63 @@
         }
       }
     }
+    .product-detail-footer-section {
+      width: 100%;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: start;
+      margin: 3rem 0px;
+      h4 {
+        color: #333e47;
+        font-size: 20px;
+      }
+
+      div {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        justify-content: start;
+        align-items: flex-start;
+      }
+      .product-description {
+        width: 30%;
+        border-right: 1px solid #eceff2;
+        p {
+          width: 90%;
+          color: #425462;
+          font-weight: 600;
+          font-size: 18px;
+        }
+      }
+      .product-material {
+        width: 30%;
+        border-right: 1px solid #eceff2;
+        .material-list {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          color: #425462;
+          font-weight: 600;
+          font-size: 18px;
+        }
+      }
+      .product-dimension {
+        width: 30%;
+        .dimension-list {
+          display: flex;
+          flex-direction: column;
+          gap: 5px;
+          color: #425462;
+          font-weight: 600;
+          font-size: 18px;
+        }
+      }
+    }
+  }
+  .viewed-box {
+    width: 100%;
+    max-width: 1560px;
   }
 }
 
@@ -194,5 +256,20 @@
       width: 90% !important;
       margin: 0 auto !important;
     }
+  }
+}
+
+@media (max-width: 768px) {
+  .product-description {
+    width: 100% !important;
+    border: none !important;
+    margin-bottom: 30px;
+  }
+  .product-dimension {
+    width: 40% !important;
+    margin-left: 10px;
+  }
+  .product-material {
+    width: 50% !important;
   }
 }

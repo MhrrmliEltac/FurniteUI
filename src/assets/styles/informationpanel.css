@@ -1,0 +1,31 @@
+.information-panel-section {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px 0px;
+  background-color: #ebf8f9;
+  .container {
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 14px 0px;
+    gap: 20px;
+    .information {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      img {
+        width: 40px;
+        height: 40px;
+      }
+      .info-link {
+        color: #0278c7;
+        font-weight: 500;
+        font-size: 18px;
+      }
+    }
+  }
+}

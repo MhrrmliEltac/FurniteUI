@@ -7,7 +7,7 @@ import { Scrollbar } from "swiper/modules";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 
-interface ProductDataType {
+export interface ProductDataType {
   _id: string;
   itemId: item;
   userId: string;

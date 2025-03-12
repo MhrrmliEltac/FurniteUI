@@ -1,10 +1,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAppDispatch } from "../../hooks/hooks";
-import { getProductById } from "../store/slice/ProductSlice";
+import { getProductById, getViewedProduct } from "../store/slice/ProductSlice";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import NumberFlow from "@number-flow/react";
-import "../../assets/styles/productdetail.css";
 import { useSearchParams } from "react-router-dom";
+import ProductDetailFooter from "../productDetail/ProductDetailFooter";
+import InformationPanel from "../productDetail/InformationPanel";
+import PaymentPartner from "../productDetail/PaymentPartner";
+import RecentlyViewed, { ProductDataType } from "../general/RecentlyViewed";
+import Subscription from "../home/Subscription";
+import { Skeleton } from "@mui/material";
+import "../../assets/styles/productdetail.css";
 
 type Dimensions = {
   width: string;
@@ -35,11 +41,12 @@ interface ProductById {
 
 const ProductDetail = () => {
   const [productById, setProductById] = useState<ProductById | null>(null);
+  const [viewedProduct, setViewed] = useState<ProductDataType[] | null>(null);
   const [quantity, setQuantity] = useState(1);
   const [searchParams, _] = useSearchParams();
   const image: string | undefined = productById?.images[0];
-  const dispatch = useAppDispatch();
   const productId: string | null = searchParams.get("id");
+  const dispatch = useAppDispatch();
 
   const increaseQuantity = useCallback(() => {
     if (quantity < 10) {
@@ -64,8 +71,18 @@ const ProductDetail = () => {
     }
   };
 
+  const getAllViewedProduct = async () => {
+    try {
+      const response = await dispatch(getViewedProduct());
+      setViewed(response.payload);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
     getProduct();
+    getAllViewedProduct();
   }, []);
 
   return (
@@ -73,22 +90,40 @@ const ProductDetail = () => {
       <div className="product-detail-box">
         <div className="product-detail">
           <div className="image-box-grid">
-            {productById &&
+            {!Array.isArray(productById?.images) ? (
+              <Skeleton variant="rounded" width={96} height={96} />
+            ) : (
+              productById &&
               productById?.images.map((item) => (
                 <div key={productById._id} className="left-image">
                   <img src={item} alt="" />
                 </div>
-              ))}
-            <div className="right-image">
-              <img src={image} alt="" />
-            </div>
+              ))
+            )}
+            {!image ? (
+              <Skeleton variant="rounded" height={520} width={500} />
+            ) : (
+              <div className="right-image">
+                <img src={image} alt="" />
+              </div>
+            )}
           </div>
           <div className="product-info">
-            {productById && (
-              <div className="product-info-container">
+            <div className="product-info-container">
+              {!productById ? (
+                <Skeleton />
+              ) : (
                 <p className="product-id">{productById?._id}</p>
-                <div className="product-detail-heading">
+              )}
+              <div className="product-detail-heading">
+                {!productById ? (
+                  <Skeleton variant="text" height={40} width={300} />
+                ) : (
                   <h3>{productById?.name}</h3>
+                )}
+                {!productById ? (
+                  <Skeleton variant="text" height={40} width={100} />
+                ) : (
                   <div className="icon-box">
                     <Icon
                       icon="mdi:heart-outline"
@@ -107,28 +142,32 @@ const ProductDetail = () => {
                       style={{ color: "#284551" }}
                     />
                   </div>
-                </div>
-                <div className="product-info-footer">
+                )}
+              </div>
+              <div className="product-info-footer">
+                {!productById ? (
+                  <Skeleton variant="text" height={40} width={150} />
+                ) : (
                   <p className="product-price">$ {productById?.price}</p>
-                  <div className="product-color">
-                    <p>Variations</p>
-                    {productById.colors?.map((color) => (
-                      <div
-                        key={productById._id}
-                        className="color"
-                        style={{
-                          backgroundColor: color,
-                          width: "20px",
-                          height: "20px",
-                          borderRadius: "50%",
-                          border: "1px solid #3692A4",
-                        }}
-                      ></div>
-                    ))}
-                  </div>
+                )}
+                <div className="product-color">
+                  <p>Variations</p>
+                  {productById?.colors?.map((color) => (
+                    <span
+                      key={productById?._id}
+                      className="color"
+                      style={{
+                        backgroundColor: color,
+                        width: "20px",
+                        height: "20px",
+                        borderRadius: "50%",
+                        border: "1px solid #3692A4",
+                      }}
+                    ></span>
+                  ))}
                 </div>
               </div>
-            )}
+            </div>
             <div className="button-box">
               <div className="buttons">
                 <button className="first-btn">
@@ -167,7 +206,23 @@ const ProductDetail = () => {
             </div>
           </div>
         </div>
+        <ProductDetailFooter
+          material={productById?.material ?? []}
+          description={productById?.description ?? ""}
+          structureColor={productById?.structureColor ?? []}
+          style={productById?.style ?? []}
+          dimensions={productById?.dimensions ?? ({} as Dimensions)}
+        />
       </div>
+      <InformationPanel />
+      <PaymentPartner />
+      <div className="viewed-box">
+        <RecentlyViewed
+          productData={viewedProduct}
+          show={{ isVisible: false }}
+        />
+      </div>
+      <Subscription />
     </section>
   );
 };

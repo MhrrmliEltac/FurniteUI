@@ -33,10 +33,12 @@ interface ProductDataType {
 const initialState: {
   loading: boolean;
   product: ProductDataType[];
+  viewed: ProductDataType[];
   error: string | null;
 } = {
   loading: false,
   product: [],
+  viewed: [],
   error: null,
 };
 
@@ -46,6 +48,23 @@ export const getProductById = createAsyncThunk(
     try {
       const response = await axios.get(
         `https://furniture-server-theta.vercel.app/api/products/${_id}`
+      );
+      return response.data;
+    } catch (err) {
+      const error = err as AxiosError<{ message: string }>;
+      return rejectWithValue(
+        error.response?.data?.message || "Failed to fetch product"
+      );
+    }
+  }
+);
+
+export const getViewedProduct = createAsyncThunk(
+  "product/recently-viewed",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await axios.get(
+        "https://furniture-server-theta.vercel.app/api/viewed/recently-viewed/1234"
       );
       return response.data;
     } catch (err) {
@@ -75,6 +94,27 @@ export const productSlice = createSlice({
     );
     builder.addCase(
       getProductById.rejected,
+      (state, action: PayloadAction<unknown>) => {
+        state.loading = false;
+        state.error =
+          typeof action.payload === "string"
+            ? action.payload
+            : "Something went wrong";
+      }
+    );
+    builder.addCase(getViewedProduct.pending, (state) => {
+      state.loading = true;
+      state.error = null;
+    });
+    builder.addCase(
+      getViewedProduct.fulfilled,
+      (state, action: PayloadAction<ProductDataType>) => {
+        state.loading = false;
+        state.viewed = [action.payload];
+      }
+    );
+    builder.addCase(
+      getViewedProduct.rejected,
       (state, action: PayloadAction<unknown>) => {
         state.loading = false;
         state.error =

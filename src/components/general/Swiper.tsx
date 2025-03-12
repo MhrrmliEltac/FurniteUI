@@ -1,13 +1,12 @@
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Icon } from "@iconify/react";
-import "swiper/css";
-import "swiper/css/scrollbar";
-import "../../assets/styles/swiper.css";
+import { createSearchParams, useNavigate } from "react-router-dom";
 import { Scrollbar } from "swiper/modules";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import { createSearchParams, useNavigate } from "react-router-dom";
-
+import "swiper/css";
+import "swiper/css/scrollbar";
+import "../../assets/styles/swiper.css";
 interface ProductDataType {
   _id: string;
   name: string;

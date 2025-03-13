@@ -48,7 +48,7 @@ export const getProductById = createAsyncThunk(
     try {
       const response = await axios.get(
         `https://furniture-server-theta.vercel.app/api/products/${_id}`,
-        { withCredentials: true }
+
       );
       return response.data;
     } catch (err) {
@@ -66,7 +66,7 @@ export const getViewedProduct = createAsyncThunk(
     try {
       const response = await axios.get(
         "https://furniture-server-theta.vercel.app/api/viewed/recently-viewed/1234",
-        { withCredentials: true }
+
       );
       return response.data;
     } catch (err) {

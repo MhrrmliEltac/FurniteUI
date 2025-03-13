@@ -1,0 +1,167 @@
+.login-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  .login-section-header {
+    display: flex;
+    justify-content: center;
+    margin: 0px 0px 3rem 0px;
+    transition: all 0.5s ease;
+    width: 80%;
+    h1 {
+      transition: all 0.5s ease;
+      color: #162c36;
+      font-size: 48px;
+      font-weight: 500;
+      font-family: "McLaren";
+    }
+  }
+  .login {
+    display: flex;
+    width: 80%;
+    max-width: 1560px;
+    flex-wrap: wrap;
+    .left-side {
+      transition: all 0.5s ease;
+      width: 50%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 50px;
+      padding: 24px 0px;
+      .login-heading {
+        transition: all 0.5s ease;
+        h2 {
+          font-size: 36px;
+          font-weight: 700;
+          color: #162c36;
+        }
+        P {
+          font-size: 18px;
+          font-weight: 500;
+          color: #162c36;
+          font-family: "McLaren";
+          text-align: center;
+        }
+      }
+      .login-body {
+        transition: all 0.5s ease;
+        width: 80%;
+        form {
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+          gap: 50px;
+          .btn {
+            span {
+              font-size: 12px;
+            }
+          }
+          .form-group {
+            span {
+              font-size: 16px;
+              font-weight: 500;
+              color: #0278c7;
+              font-family: "McLaren";
+              margin-top: -20px;
+            }
+          }
+          .form-label {
+            color: #162c36;
+            font-size: 18px;
+            font-weight: 600;
+            font-family: "McLaren";
+          }
+          input {
+            width: 100%;
+            border: none;
+            outline: none;
+            background-color: #fff;
+            font-size: 20px;
+            border-radius: 8px;
+            color: #b0bfc9;
+          }
+        }
+        .create-account-navigate {
+          margin: 20px 0px;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          color: #162c36;
+          font-weight: 500;
+          font-size: 18px;
+          font-family: "McLaren";
+          .navigate-link {
+            color: #3692a4;
+            text-decoration: none;
+          }
+        }
+      }
+    }
+    .right-side {
+      transition: all 0.5s ease;
+      width: 50%;
+      height: 700px;
+      position: relative;
+      img {
+        transition: all 0.5s ease;
+        width: 100%;
+        height: inherit;
+        object-fit: cover;
+      }
+      .overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        z-index: 1;
+        background: rgba(0, 0, 0, 0.7) 72%;
+        color: #f9fafb;
+        h3 {
+          font-size: 36px;
+          width: 80%;
+          text-align: center;
+        }
+        p {
+          width: 70%;
+          font-size: 18px;
+          text-align: center;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: 1024px) {
+  .left-side {
+    width: 100% !important;
+  }
+  .right-side {
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+@media (max-width: 768px) {
+  .login-section-header {
+    h1 {
+      font-size: 24px !important;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .login-heading {
+    h2 {
+      font-size: 28px !important;
+      text-align: center;
+    }
+  }
+}

@@ -107,6 +107,7 @@ const Navbar = () => {
                 scroll === 0 && path === "/" ? "#EBF8F9" : "#284551",
               color: scroll === 0 && path === "/" ? "#284551" : "#EBF8F9",
             }}
+            onClick={() => navigate("/login")}
           >
             Log in
           </motion.button>

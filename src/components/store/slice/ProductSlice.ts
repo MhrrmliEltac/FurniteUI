@@ -47,7 +47,8 @@ export const getProductById = createAsyncThunk(
   async (_id: string, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `https://furniture-server-theta.vercel.app/api/products/${_id}`
+        `https://furniture-server-theta.vercel.app/api/products/${_id}`,
+        { withCredentials: true }
       );
       return response.data;
     } catch (err) {
@@ -64,7 +65,8 @@ export const getViewedProduct = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        "https://furniture-server-theta.vercel.app/api/viewed/recently-viewed/1234"
+        "https://furniture-server-theta.vercel.app/api/viewed/recently-viewed/1234",
+        { withCredentials: true }
       );
       return response.data;
     } catch (err) {

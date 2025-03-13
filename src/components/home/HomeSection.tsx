@@ -36,6 +36,7 @@ const HomeSection = () => {
   const getProducts = async () => {
     const response = await axios.get(
       "https://furniture-server-theta.vercel.app/api/products/category?category=Chair",
+      // "http://localhost:4000/api/products/category?category=Chair",
       { withCredentials: true }
     );
     const product = await response.data;

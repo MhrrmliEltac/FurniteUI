@@ -4,10 +4,19 @@ import { Box, Button, FormControl, FormGroup, FormLabel } from "@mui/material";
 import LoginImage from "../../assets/images/login-rightt-image.svg";
 import "../../assets/styles/login.css";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import { toast } from "sonner";
 
 const Login: React.FC = () => {
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    const response = await axios.post("http://localhost:4000/api/users/login", {
+      email: "eltac306@gmail.com",
+      password: "12345674asasdA@#@",
+    });
+    const message = response.data.message;
+    toast.success(message);
   };
 
   return (

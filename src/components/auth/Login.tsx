@@ -11,10 +11,13 @@ const Login: React.FC = () => {
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await axios.post("http://localhost:4000/api/users/login", {
-      email: "eltac306@gmail.com",
-      password: "12345674asasdA@#@",
-    });
+    const response = await axios.post(
+      "https://furniture-server-theta.vercel.app/api/users/login",
+      {
+        email: "eltac306@gmail.com",
+        password: "12345674asasdA@#@",
+      }
+    );
     const message = response.data.message;
     toast.success(message);
   };

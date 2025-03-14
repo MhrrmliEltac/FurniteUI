@@ -181,13 +181,14 @@ const Login: React.FC = () => {
                   gap: "20px",
                   marginTop: "-30px",
                   transition: "all 0.5s ease",
+                  flexWrap: "wrap",
                 }}
               >
                 <Button
                   sx={{
                     width: {
-                      sm: "40%",
-                      md: "100%",
+                      xs: "100%",
+                      md: "40%",
                     },
                     backgroundColor: "#FFFFFF",
                     borderRadius: "8px",
@@ -210,8 +211,8 @@ const Login: React.FC = () => {
                 <Button
                   sx={{
                     width: {
-                      sm: "40%",
-                      md: "100%",
+                      xs: "100%",
+                      md: "40%",
                     },
                     backgroundColor: "#FFFFFF",
                     borderRadius: "8px",

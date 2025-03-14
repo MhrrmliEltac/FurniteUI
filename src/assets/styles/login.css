@@ -31,6 +31,7 @@
       justify-content: center;
       gap: 50px;
       padding: 24px 0px;
+      margin: 0px !important;
       .login-heading {
         transition: all 0.5s ease;
         h2 {
@@ -124,15 +125,18 @@
         z-index: 1;
         background: rgba(0, 0, 0, 0.7) 72%;
         color: #f9fafb;
+        transition: 0.5s all ease;
         h3 {
           font-size: 36px;
           width: 80%;
           text-align: center;
+          transition: 0.5s all ease;
         }
         p {
           width: 70%;
           font-size: 18px;
           text-align: center;
+          transition: 0.5s all ease;
         }
       }
     }
@@ -149,6 +153,18 @@
   }
 }
 @media (max-width: 768px) {
+  .right-side {
+    .overlay {
+      .overlay-heading {
+        transition: 0.5s all ease;
+        font-size: 24px !important;
+      }
+      .overlay-paragraph {
+        transition: 0.5s all ease;
+        font-size: 15px !important;
+      }
+    }
+  }
   .login-section-header {
     h1 {
       font-size: 24px !important;
@@ -157,6 +173,18 @@
 }
 
 @media (max-width: 640px) {
+  .right-side {
+    .overlay {
+      .overlay-heading {
+        font-size: 18px !important;
+        transition: 0.5s all ease;
+      }
+      .overlay-paragraph {
+        transition: 0.5s all ease;
+        font-size: 12px !important;
+      }
+    }
+  }
   .login-heading {
     h2 {
       font-size: 28px !important;

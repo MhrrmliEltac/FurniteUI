@@ -2,10 +2,10 @@ import React, { ChangeEvent, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Box, Button, FormControl, FormGroup, FormLabel } from "@mui/material";
 import LoginImage from "../../assets/images/login-rightt-image.svg";
-import "../../assets/styles/login.css";
 import { Link } from "react-router-dom";
 import axios, { isAxiosError } from "axios";
 import { toast } from "sonner";
+import "../../assets/styles/login.css";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -15,15 +15,30 @@ const Login: React.FC = () => {
     }
   );
 
+  const setTokenWithExpiry = (token: string, expiryTime: any) => {
+    const expriry = new Date().getTime() + expiryTime;
+    const tokenData = {
+      token: token,
+      expiryTime: expriry,
+    };
+    localStorage.setItem("authToke", JSON.stringify(tokenData));
+  };
+
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setFormData({ email: "", password: "" });
+    if (!formData.email || !formData.password) {
+      toast.error("Enter email or password");
+      return;
+    }
     try {
       const response = await axios.post(
         "https://furniture-server-two.vercel.app/api/users/login",
         formData
       );
+      const token = response?.data.token;
       toast.success(response.data.message);
+      setTokenWithExpiry(token, 20 * 20 * 1000);
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
@@ -34,7 +49,6 @@ const Login: React.FC = () => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
-  console.log(formData);
 
   return (
     <section className="login-section">

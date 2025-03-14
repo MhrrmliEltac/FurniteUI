@@ -18,6 +18,7 @@ const Login: React.FC = () => {
         password: "12345674asasdA@#@",
       }
     );
+    console.log(response)
     const message = response.data.message;
     toast.success(message);
   };

@@ -35,8 +35,9 @@ const HomeSection = () => {
 
   const getProducts = async () => {
     const response = await axios.get(
-      "https://furniture-server-two.vercel.app/api/products/category?category=Chair"
+      "https://furniture-server-two.vercel.app/api/products/category?category=Chair",
       // "http://localhost:4000/api/products/category?category=Chair",
+      { withCredentials: true }
     );
     const product = await response.data;
     setProductData(product);
@@ -44,8 +45,7 @@ const HomeSection = () => {
 
   const allProductData = async () => {
     const response = await axios.get(
-      "https://furniture-server-two.vercel.app/api/products",
-  
+      "https://furniture-server-two.vercel.app/api/products"
     );
     const allProduct = await response.data;
     const filteredData = allProduct.filter(

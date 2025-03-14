@@ -19,7 +19,7 @@ const ProjectSection = () => {
 
   const getAllProject = async () => {
     const response = await axios.get(
-      "https://furniture-server-theta.vercel.app/api/project/project",
+      "https://furniture-server-two.vercel.app/api/project/project",
 
     );
     setProjectData(response.data);

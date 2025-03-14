@@ -39,7 +39,7 @@ const Wishlist = () => {
   const getAllProducts = async () => {
     try {
       const response = await axios.get(
-        "https://furniture-server-theta.vercel.app/api/products/category?category=Chair"
+        "https://furniture-server-two.vercel.app/api/products/category?category=Chair"
       );
       setAllProduct(response.data);
     } catch (error) {
@@ -49,7 +49,7 @@ const Wishlist = () => {
 
   const getAllViewed = async () => {
     const response = await axios.get(
-      "https://furniture-server-theta.vercel.app/api/viewed/recently-viewed/1234"
+      "https://furniture-server-two.vercel.app/api/viewed/recently-viewed/1234"
     );
     const product = response.data;
     setViewed(product);

@@ -1,24 +1,40 @@
-import React from "react";
+import React, { ChangeEvent, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Box, Button, FormControl, FormGroup, FormLabel } from "@mui/material";
 import LoginImage from "../../assets/images/login-rightt-image.svg";
 import "../../assets/styles/login.css";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { toast } from "sonner";
 
 const Login: React.FC = () => {
+  const [formData, setFormData] = useState<{ email: string; password: string }>(
+    {
+      email: "",
+      password: "",
+    }
+  );
+
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const response = await axios.post("http://localhost:4000/api/users/login", {
-      email: "eltac306@gmail.com",
-      password: "12345674asasdA@#@",
-    });
-    console.log(response);
-    const message = response.data.message;
-    toast.success(message);
+    try {
+      const response = await axios.post(
+        "https://furniture-server-two.vercel.app/api/users/login",
+        formData
+      );
+      toast.success(response.data.message);
+    } catch (error: unknown) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    }
   };
+
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+  console.log(formData);
 
   return (
     <section className="login-section">
@@ -70,6 +86,9 @@ const Login: React.FC = () => {
                       name="email"
                       id="email"
                       placeholder="e.g. 0123456789"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        handleInputChange(e)
+                      }
                     />
                   </Box>
                 </FormControl>
@@ -106,6 +125,9 @@ const Login: React.FC = () => {
                       name="password"
                       id="password"
                       placeholder="Enter here"
+                      onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                        handleInputChange(e)
+                      }
                     />
                     <Icon
                       icon="iconamoon:eye-light"

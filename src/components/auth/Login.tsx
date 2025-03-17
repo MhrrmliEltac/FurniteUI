@@ -5,8 +5,9 @@ import LoginImage from "../../assets/images/login-rightt-image.svg";
 import { Link } from "react-router-dom";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
-import "../../assets/styles/login.css";
 import { api } from "../utils/Api";
+import AuthHeading from "./AuthHeading";
+import "../../assets/styles/login.css";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -52,9 +53,7 @@ const Login: React.FC = () => {
 
   return (
     <section className="login-section">
-      <div className="login-section-header">
-        <h1>Welcome! Lets Start to Decorate Your Space</h1>
-      </div>
+      <AuthHeading />
       <div className="login">
         <div className="left-side" style={{ backgroundColor: "#DAF1F3" }}>
           <div className="login-heading">
@@ -89,7 +88,7 @@ const Login: React.FC = () => {
                     }}
                   >
                     <Icon
-                      icon="mynaui:telephone"
+                      icon="formkit:email"
                       width="24"
                       height="24"
                       style={{ color: "#B0BFC9" }}
@@ -99,7 +98,7 @@ const Login: React.FC = () => {
                       type="email"
                       name="email"
                       id="email"
-                      placeholder="e.g. 0123456789"
+                      placeholder="e.g. steve@email.com"
                       onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         handleInputChange(e)
                       }

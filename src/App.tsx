@@ -1,22 +1,23 @@
-import Navbar from "./components/header/Navbar";
-import Footer from "./components/footer/Footer";
 import Wishlist from "./components/pages/Wishlist";
 import ProductDetail from "./components/pages/ProductDetail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
-import { lazy, Suspense } from "react";
-import Loader from "./components/general/Loader";
+import { lazy } from "react";
 import "./assets/styles/home.css";
 import AuthLayout from "./components/Layouts/AuthLayout";
 import Login from "./components/auth/Login";
+import SuspenseLayout from "./components/Layouts/SuspenseLayout";
+import Register from "./components/auth/Register";
 
 const HomePage = lazy(() => import("./components/pages/Home"));
+const Navbar = lazy(() => import("./components/header/Navbar"));
+const Footer = lazy(() => import("./components/footer/Footer"));
 
 const App = () => {
   return (
     <BrowserRouter>
       <Toaster />
-      <Suspense fallback={<Loader />}>
+      <SuspenseLayout>
         <Navbar />
         <Routes>
           {/* Home səhifəsi üçün route */}
@@ -28,11 +29,12 @@ const App = () => {
           {/* Məhsul özəllikləri səhifəsi üçün route */}
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
           </Route>
           {/* <Route path="/add-product" element={<AddProduct />} />  Burada əlavə məhsul səhifəsini əlavə edə bilərsiniz */}
         </Routes>
         <Footer />
-      </Suspense>
+      </SuspenseLayout>
     </BrowserRouter>
   );
 };

@@ -120,6 +120,7 @@ const Navbar = () => {
                   ? "1px solid #EBF8F9"
                   : "1px solid #284551",
             }}
+            onClick={() => navigate("/register")}
           >
             Create an Account
           </motion.button>
@@ -186,6 +187,7 @@ const Navbar = () => {
                 exit={{ opacity: 0, translateX: -20 }}
                 transition={{ duration: 0.3 }}
                 className="btn first-btn"
+                onClick={() => navigate("/login")}
               >
                 Log in
               </motion.button>
@@ -195,6 +197,7 @@ const Navbar = () => {
                 exit={{ opacity: 0, translateX: -20 }}
                 transition={{ duration: 0.6 }}
                 className="btn primary-btn"
+                onClick={() => navigate("/register")}
               >
                 Create an Account
               </motion.button>

@@ -1,12 +1,8 @@
 import { Suspense } from "react";
-import { Outlet } from "react-router-dom";
+import Loader from "../general/Loader";
 
-const SuspenseLayout = () => {
-  return (
-    <Suspense fallback={<>...</>}>
-      <Outlet />
-    </Suspense>
-  );
+const SuspenseLayout = ({ children }: { children: React.ReactNode }) => {
+  return <Suspense fallback={<Loader />}>{children}</Suspense>;
 };
 
 export default SuspenseLayout;

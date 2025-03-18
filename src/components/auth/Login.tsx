@@ -2,7 +2,7 @@ import React, { ChangeEvent, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Box, Button, FormControl, FormGroup, FormLabel } from "@mui/material";
 import LoginImage from "../../assets/images/login-rightt-image.svg";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import { api } from "../utils/Api";
@@ -18,10 +18,13 @@ const Login: React.FC = () => {
       password: "",
     }
   );
+  const [disabled, setDisabled] = useState<boolean>(false);
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
+    setDisabled(true);
 
     if (!formData.email || !formData.password) {
       toast.error("Enter email or password");
@@ -36,8 +39,14 @@ const Login: React.FC = () => {
       if (response.status === 200) {
         dispatch(getProfileToken());
       }
+      const emptyForm = {
+        password: "",
+        email: "",
+      };
+      setFormData(emptyForm);
 
       toast.success(response.data.message);
+      navigate("/");
     } catch (error: unknown) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
@@ -154,6 +163,7 @@ const Login: React.FC = () => {
               </FormGroup>
               <Button
                 type="submit"
+                disabled={disabled}
                 sx={{
                   width: "100%",
                   backgroundColor: "#284551",

@@ -5,9 +5,25 @@ import LogoDark from "../../assets/images/Logo-fill.png";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import Category from "../home/Category";
-import "../../assets/styles/navbar.css";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { deleteProfileToken } from "../store/slice/UserSlice";
+import { toast } from "sonner";
+import { Button } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import "../../assets/styles/navbar.css";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
@@ -34,6 +50,7 @@ const Navbar = () => {
   };
 
   const logOut = async () => {
+    toast.success("Logged out successfully");
     dispatch(deleteProfileToken());
   };
 
@@ -108,30 +125,67 @@ const Navbar = () => {
               />
             </li>
           </ul>
-          <motion.button
-            className="btn first-btn"
-            style={{
-              backgroundColor:
-                scroll === 0 && path === "/" ? "#EBF8F9" : "#284551",
-              color: scroll === 0 && path === "/" ? "#284551" : "#EBF8F9",
-            }}
-            onClick={isUser.id ? logOut : () => navigate("/login")}
-          >
-            {isUser.id ? "Log Out" : "Log In"}
-          </motion.button>
-          <motion.button
-            className="btn primary-btn"
-            style={{
-              color: scroll === 0 && path === "/" ? "#EBF8F9" : "#284551",
-              border:
-                scroll === 0 && path === "/"
-                  ? "1px solid #EBF8F9"
-                  : "1px solid #284551",
-            }}
-            onClick={() => navigate("/register")}
-          >
-            Create an Account
-          </motion.button>
+          {isUser.id ? (
+            <>
+              <DropdownMenu>
+                <DropdownMenuTrigger>
+                  <Icon
+                    className="cursor-pointer"
+                    icon="solar:user-linear"
+                    width="28"
+                    height="28"
+                    style={{ color: "#B0BFC9" }}
+                  />
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-56 z-20 bg-white ">
+                  <DropdownMenuLabel className="mx-2">
+                    My Account
+                  </DropdownMenuLabel>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>Profile</DropdownMenuItem>
+                    <DropdownMenuItem>
+                      Settings
+                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator />
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem  onClick={logOut}>
+                    Log out
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </>
+          ) : (
+            <>
+              <motion.button
+                className="btn first-btn"
+                style={{
+                  backgroundColor:
+                    scroll === 0 && path === "/" ? "#EBF8F9" : "#284551",
+                  color: scroll === 0 && path === "/" ? "#284551" : "#EBF8F9",
+                }}
+                onClick={() => navigate("/login")}
+              >
+                Log In
+              </motion.button>
+              <motion.button
+                className="btn primary-btn"
+                style={{
+                  color: scroll === 0 && path === "/" ? "#EBF8F9" : "#284551",
+                  border:
+                    scroll === 0 && path === "/"
+                      ? "1px solid #EBF8F9"
+                      : "1px solid #284551",
+                }}
+                onClick={() => navigate("/register")}
+              >
+                Create an Account
+              </motion.button>
+            </>
+          )}
           <div className="burger-menu">
             {!burgerMenuOpen ? (
               <Icon

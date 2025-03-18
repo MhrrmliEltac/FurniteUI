@@ -1,7 +1,7 @@
 import React, { ChangeEvent, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { Box, Button, FormControl, FormGroup, FormLabel } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
 import { api } from "../utils/Api";
@@ -10,6 +10,7 @@ import RegisterImage from "../../assets/images/unsplash__HqHX3LBN18.svg";
 import PhoneInput from "react-phone-number-input";
 import "../../assets/styles/register.css";
 import "react-phone-number-input/style.css";
+import SendFormLoader from "../general/SendFormLoader";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<{
@@ -32,6 +33,8 @@ const Register: React.FC = () => {
     showPass: false,
     showconfirmPassword: false,
   });
+  const [showLoader, setShowLoader] = useState(false);
+  const navigate = useNavigate();
 
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,12 +55,14 @@ const Register: React.FC = () => {
     }
 
     try {
+      setShowLoader(!showLoader);
       const response = await api.post("/register", formData, {
         withCredentials: true,
       });
 
-      if (response) {
-        getData();
+      if (response.status === 201) {
+        setShowLoader(!showLoader);
+        navigate("/login");
       }
 
       toast.success(response.data.message);
@@ -66,11 +71,6 @@ const Register: React.FC = () => {
         toast.error(error.response?.data.message);
       }
     }
-  };
-
-  const getData = async () => {
-    const response = await api.get("/profile");
-    console.log(response);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
@@ -104,7 +104,7 @@ const Register: React.FC = () => {
                 sx={{ display: "flex", gap: "30px", flexDirection: "column" }}
                 className="form-group"
               >
-                {/* userName */}
+                {/* user name */}
                 <FormControl
                   sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
                 >
@@ -137,7 +137,7 @@ const Register: React.FC = () => {
                       type="text"
                       name="userName"
                       id="userName"
-                      placeholder="e.g. steve@email.com"
+                      placeholder="Enter here"
                       onChange={(e: ChangeEvent<HTMLInputElement>) =>
                         handleInputChange(e)
                       }
@@ -327,6 +327,7 @@ const Register: React.FC = () => {
               </FormGroup>
               <Button
                 type="submit"
+                disabled={showLoader}
                 sx={{
                   width: "100%",
                   backgroundColor: "#284551",
@@ -341,7 +342,7 @@ const Register: React.FC = () => {
                   borderRadius: "8px",
                 }}
               >
-                Create Your Account
+                {showLoader ? <SendFormLoader /> : "Create Your Account"}
               </Button>
               <Box
                 sx={{

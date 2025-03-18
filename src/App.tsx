@@ -3,17 +3,20 @@ import ProductDetail from "./components/pages/ProductDetail";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { Toaster } from "sonner";
 import { lazy } from "react";
-import "./assets/styles/home.css";
 import AuthLayout from "./components/Layouts/AuthLayout";
 import Login from "./components/auth/Login";
 import SuspenseLayout from "./components/Layouts/SuspenseLayout";
 import Register from "./components/auth/Register";
+import useCheckAuth from "./components/utils/UseCheckAuth";
+import "./assets/styles/home.css";
 
 const HomePage = lazy(() => import("./components/pages/Home"));
 const Navbar = lazy(() => import("./components/header/Navbar"));
 const Footer = lazy(() => import("./components/footer/Footer"));
 
 const App = () => {
+  useCheckAuth();
+
   return (
     <BrowserRouter>
       <Toaster />

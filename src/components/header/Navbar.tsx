@@ -6,6 +6,8 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { useLocation, useNavigate } from "react-router-dom";
 import Category from "../home/Category";
 import "../../assets/styles/navbar.css";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { deleteProfileToken } from "../store/slice/UserSlice";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
@@ -13,6 +15,8 @@ const Navbar = () => {
   const navRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const isUser = useAppSelector((state) => state.userReducer.user);
   const path = location.pathname;
 
   useEffect(() => {
@@ -27,6 +31,10 @@ const Navbar = () => {
 
   const handleClose = () => {
     setBurgerMenuOpen(!burgerMenuOpen);
+  };
+
+  const logOut = async () => {
+    dispatch(deleteProfileToken());
   };
 
   const itemVariant = {
@@ -107,9 +115,9 @@ const Navbar = () => {
                 scroll === 0 && path === "/" ? "#EBF8F9" : "#284551",
               color: scroll === 0 && path === "/" ? "#284551" : "#EBF8F9",
             }}
-            onClick={() => navigate("/login")}
+            onClick={isUser.id ? logOut : () => navigate("/login")}
           >
-            Log in
+            {isUser.id ? "Log Out" : "Log In"}
           </motion.button>
           <motion.button
             className="btn primary-btn"

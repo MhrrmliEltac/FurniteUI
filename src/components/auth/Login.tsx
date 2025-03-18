@@ -8,6 +8,8 @@ import { toast } from "sonner";
 import { api } from "../utils/Api";
 import AuthHeading from "./AuthHeading";
 import "../../assets/styles/login.css";
+import { useAppDispatch } from "../../hooks/hooks";
+import { getProfileToken } from "../store/slice/UserSlice";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -16,6 +18,7 @@ const Login: React.FC = () => {
       password: "",
     }
   );
+  const dispatch = useAppDispatch();
 
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -30,8 +33,8 @@ const Login: React.FC = () => {
         withCredentials: true,
       });
 
-      if (response) {
-        getData();
+      if (response.status === 200) {
+        dispatch(getProfileToken());
       }
 
       toast.success(response.data.message);
@@ -40,11 +43,6 @@ const Login: React.FC = () => {
         toast.error(error.response?.data.message);
       }
     }
-  };
-
-  const getData = async () => {
-    const response = await api.get("/profile");
-    console.log(response);
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

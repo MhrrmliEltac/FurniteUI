@@ -96,7 +96,8 @@ export const userSlice = createSlice({
     });
     builder.addCase(deleteProfileToken.fulfilled, (state) => {
       state.user = { id: "", email: "" };
-      state.isAuthenticated = false;
+      // state.isAuthenticated = false;
+      localStorage.removeItem("auth");
       state.loading = false;
     });
     builder.addCase(

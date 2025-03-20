@@ -1,13 +1,16 @@
+import { useAppDispatch } from "@/hooks/hooks";
 import { useEffect } from "react";
-import { useAppDispatch } from "../../hooks/hooks";
 import { getProfileToken } from "../store/slice/UserSlice";
 
-const useCheckAuth = () => {
+const UseCheckAuth = () => {
   const dispatch = useAppDispatch();
+  const isAuthenticated = localStorage.getItem("auth");
 
   useEffect(() => {
-    dispatch(getProfileToken());
+    if (isAuthenticated) {
+      dispatch(getProfileToken());
+    }
   }, [dispatch]);
 };
 
-export default useCheckAuth;
+export default UseCheckAuth;

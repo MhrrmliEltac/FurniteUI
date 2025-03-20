@@ -8,19 +8,12 @@ import Category from "../home/Category";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { deleteProfileToken } from "../store/slice/UserSlice";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuPortal,
   DropdownMenuSeparator,
-  DropdownMenuShortcut,
-  DropdownMenuSub,
-  DropdownMenuSubContent,
-  DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import "../../assets/styles/navbar.css";
@@ -50,8 +43,8 @@ const Navbar = () => {
   };
 
   const logOut = async () => {
+    await dispatch(deleteProfileToken());
     toast.success("Logged out successfully");
-    dispatch(deleteProfileToken());
   };
 
   const itemVariant = {
@@ -62,6 +55,16 @@ const Navbar = () => {
       translateY: 0,
       transition: { delay: 0.2 * index },
     }),
+  };
+
+  const navigateLink = (e: React.MouseEvent<HTMLParagraphElement>) => {
+    const tab = e.currentTarget;
+    if (tab.innerText === "Search") {
+      console.log("isledi");
+    } else if (tab.innerText === "Basket") {
+    } else if (tab.innerText === "Favourite") {
+      navigate("/wishlist");
+    }
   };
 
   return (
@@ -130,29 +133,44 @@ const Navbar = () => {
               <DropdownMenu>
                 <DropdownMenuTrigger>
                   <Icon
-                    className="cursor-pointer"
-                    icon="solar:user-linear"
+                    icon="lucide:user-round"
                     width="28"
                     height="28"
-                    style={{ color: "#B0BFC9" }}
+                    style={{
+                      color:
+                        scroll === 0 && path === "/" ? "#DAF1F3" : "#284551",
+                      cursor: "pointer",
+                    }}
+                    className="lg:flex hidden"
                   />
                 </DropdownMenuTrigger>
-                <DropdownMenuContent className="w-56 z-20 bg-white ">
-                  <DropdownMenuLabel className="mx-2">
+                <DropdownMenuContent
+                  className="w-56 z-20 bg-white"
+                  style={{
+                    padding: "20px 10px",
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "10px",
+                    marginTop: "10px",
+                  }}
+                >
+                  <DropdownMenuLabel style={{ fontSize: "15px" }}>
                     My Account
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuGroup>
-                    <DropdownMenuItem>Profile</DropdownMenuItem>
-                    <DropdownMenuItem>
-                      Settings
-                      <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-                    </DropdownMenuItem>
-                  </DropdownMenuGroup>
+                  <DropdownMenuItem className="cursor-pointer hover:bg-red border-none rounded-none">
+                    Profile
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
+                  <DropdownMenuItem className="cursor-pointer rounded-none">
+                    Settings
+                  </DropdownMenuItem>
                   <DropdownMenuSeparator />
-                  <DropdownMenuSeparator />
-                  <DropdownMenuItem  onClick={logOut}>
+                  <DropdownMenuItem
+                    onClick={logOut}
+                    className="cursor-pointer rounded-none"
+                  >
+                    {" "}
                     Log out
                   </DropdownMenuItem>
                 </DropdownMenuContent>
@@ -192,18 +210,18 @@ const Navbar = () => {
                 icon="iconamoon:menu-burger-horizontal"
                 width="30"
                 height="30"
-                style={{ color: "#284551" }}
+                style={{ color: scroll === 0 ? "#DAF1F3" : "#284551" }}
                 onClick={handleOpen}
-                className="icon"
+                className="icon cursor-pointer"
               />
             ) : (
               <Icon
                 icon="proicons:cancel"
                 width="30"
                 height="30"
-                style={{ color: "#284551" }}
+                style={{ color: scroll === 0 ? "#DAF1F3" : "#284551" }}
                 onClick={handleClose}
-                className="icon"
+                className="icon cursor-pointer"
               />
             )}
           </div>
@@ -219,7 +237,7 @@ const Navbar = () => {
               key="burger-menu-list"
               className="burger-menu-list"
             >
-              <ul className="burger-menu-list-item">
+              <ul className="burger-menu-list-item items-start justify-start">
                 {[
                   "lucide:search",
                   "mingcute:shopping-bag-2-line",
@@ -232,6 +250,7 @@ const Navbar = () => {
                     exit={{ opacity: 0, translateY: -10 }}
                     key={index}
                     custom={index}
+                    className="flex gap-2 items-center"
                   >
                     <Icon
                       icon={tab}
@@ -240,29 +259,74 @@ const Navbar = () => {
                       className="icon"
                       style={{ color: "#DAF1F3" }}
                     />
+                    {tab === "lucide:search" ? (
+                      <p
+                        onClick={(e: React.MouseEvent<HTMLParagraphElement>) =>
+                          navigateLink(e)
+                        }
+                        className="text-[#DAF1F3]"
+                      >
+                        Search
+                      </p>
+                    ) : tab === "mingcute:shopping-bag-2-line" ? (
+                      <p
+                        onClick={(e: React.MouseEvent<HTMLParagraphElement>) =>
+                          navigateLink(e)
+                        }
+                        className="text-[#DAF1F3]"
+                      >
+                        Basket
+                      </p>
+                    ) : tab === "mdi:heart-outline" ? (
+                      <p
+                        onClick={(e: React.MouseEvent<HTMLParagraphElement>) =>
+                          navigateLink(e)
+                        }
+                        className="text-[#DAF1F3]"
+                      >
+                        Favourite
+                      </p>
+                    ) : null}
                   </motion.li>
                 ))}
               </ul>
-              <motion.button
-                initial={{ translateX: -20, opacity: 0 }}
-                animate={{ translateX: 0, opacity: 1 }}
-                exit={{ opacity: 0, translateX: -20 }}
-                transition={{ duration: 0.3 }}
-                className="btn first-btn"
-                onClick={() => navigate("/login")}
-              >
-                Log in
-              </motion.button>
-              <motion.button
-                initial={{ translateX: -20, opacity: 0 }}
-                animate={{ translateX: 0, opacity: 1 }}
-                exit={{ opacity: 0, translateX: -20 }}
-                transition={{ duration: 0.6 }}
-                className="btn primary-btn"
-                onClick={() => navigate("/register")}
-              >
-                Create an Account
-              </motion.button>
+              {isUser.id ? (
+                <div className="flex justify-start gap-2 items-center">
+                  <Icon
+                    icon="lucide:user-round"
+                    width="28"
+                    height="28"
+                    style={{
+                      color: "#DAF1F3",
+                      cursor: "pointer",
+                    }}
+                  />
+                  <p className="text-[#DAF1F3]">Profile</p>
+                </div>
+              ) : (
+                <>
+                  <motion.button
+                    initial={{ translateX: -20, opacity: 0 }}
+                    animate={{ translateX: 0, opacity: 1 }}
+                    exit={{ opacity: 0, translateX: -20 }}
+                    transition={{ duration: 0.3 }}
+                    className="btn first-btn"
+                    onClick={() => navigate("/login")}
+                  >
+                    Log in
+                  </motion.button>
+                  <motion.button
+                    initial={{ translateX: -20, opacity: 0 }}
+                    animate={{ translateX: 0, opacity: 1 }}
+                    exit={{ opacity: 0, translateX: -20 }}
+                    transition={{ duration: 0.6 }}
+                    className="btn primary-btn"
+                    onClick={() => navigate("/register")}
+                  >
+                    Create an Account
+                  </motion.button>
+                </>
+              )}
             </motion.div>
           )}
         </AnimatePresence>

@@ -10,12 +10,12 @@ type UserDataType = {
   exp?: number;
   iat?: number;
 };
-
 interface ProfileData {
   loading: boolean;
   message: string;
   user: UserDataType;
   error: string | null;
+  isAuthenticated: boolean;
 }
 
 const initialState: ProfileData = {
@@ -23,6 +23,7 @@ const initialState: ProfileData = {
   message: "",
   user: { id: "", email: "" },
   error: null,
+  isAuthenticated: false,
 };
 
 export const getProfileToken = createAsyncThunk(
@@ -32,6 +33,7 @@ export const getProfileToken = createAsyncThunk(
       const response = await api.get("/profile");
       return response.data;
     } catch (err) {
+      console.log(err);
       const error = err as AxiosError<{ message: string }>;
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch product"
@@ -58,7 +60,13 @@ export const deleteProfileToken = createAsyncThunk(
 export const userSlice = createSlice({
   name: "user/profile",
   initialState,
-  reducers: {},
+  reducers: {
+    authCheck: (state) => {
+      state.isAuthenticated = true;
+      const hasUser = JSON.stringify(state.isAuthenticated);
+      localStorage.setItem("auth", hasUser);
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getProfileToken.pending, (state) => {
       state.loading = true;
@@ -88,6 +96,8 @@ export const userSlice = createSlice({
     });
     builder.addCase(deleteProfileToken.fulfilled, (state) => {
       state.user = { id: "", email: "" };
+      state.isAuthenticated = false;
+      state.loading = false;
     });
     builder.addCase(
       deleteProfileToken.rejected,
@@ -101,6 +111,8 @@ export const userSlice = createSlice({
     );
   },
 });
+
+export const { authCheck } = userSlice.actions;
 
 export const selectAll = (state: RootState) => state.userReducer.user;
 export const selectLoading = (state: RootState) => state.userReducer.loading;

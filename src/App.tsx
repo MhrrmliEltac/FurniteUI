@@ -7,15 +7,16 @@ import AuthLayout from "./components/Layouts/AuthLayout";
 import Login from "./components/auth/Login";
 import SuspenseLayout from "./components/Layouts/SuspenseLayout";
 import Register from "./components/auth/Register";
-import useCheckAuth from "./components/utils/UseCheckAuth";
 import "./assets/styles/home.css";
+import Profile from "./components/pages/Profile";
+import UseCheckAuth from "./components/utils/UseCheckAuth";
 
 const HomePage = lazy(() => import("./components/pages/Home"));
 const Navbar = lazy(() => import("./components/header/Navbar"));
 const Footer = lazy(() => import("./components/footer/Footer"));
 
 const App = () => {
-  useCheckAuth();
+  UseCheckAuth();
 
   return (
     <BrowserRouter>
@@ -34,6 +35,8 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
           </Route>
+          {/* Profile səhifəsi üçün route */}
+          <Route path="/profile" element={<Profile />} />
           {/* <Route path="/add-product" element={<AddProduct />} />  Burada əlavə məhsul səhifəsini əlavə edə bilərsiniz */}
         </Routes>
         <Footer />

@@ -9,7 +9,7 @@ import { api } from "../utils/Api";
 import AuthHeading from "./AuthHeading";
 import "../../assets/styles/login.css";
 import { useAppDispatch } from "../../hooks/hooks";
-import { getProfileToken } from "../store/slice/UserSlice";
+import { authCheck, getProfileToken } from "../store/slice/UserSlice";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -35,6 +35,10 @@ const Login: React.FC = () => {
       const response = await api.post("/login", formData, {
         withCredentials: true,
       });
+
+      if (response.status === 200) {
+        dispatch(authCheck());
+      }
 
       if (response.status === 200) {
         dispatch(getProfileToken());

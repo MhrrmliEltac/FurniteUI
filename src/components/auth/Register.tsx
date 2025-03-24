@@ -8,9 +8,9 @@ import { api } from "../utils/Api";
 import AuthHeading from "./AuthHeading";
 import RegisterImage from "../../assets/images/unsplash__HqHX3LBN18.svg";
 import PhoneInput from "react-phone-number-input";
+import WaitLoader from "../general/WaitLoader";
 import "../../assets/styles/register.css";
 import "react-phone-number-input/style.css";
-import SendFormLoader from "../general/SendFormLoader";
 
 const Register: React.FC = () => {
   const [formData, setFormData] = useState<{
@@ -38,6 +38,14 @@ const Register: React.FC = () => {
 
   const sendForm = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    let isPassValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/;
+    if (!isPassValid.test(formData.password)) {
+      toast.error(
+        "Password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+      );
+      return;
+    }
 
     if (formData.password.length < 8) {
       toast.error("Password min 8 characters");
@@ -108,7 +116,7 @@ const Register: React.FC = () => {
                 <FormControl
                   sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
                 >
-                  <FormLabel htmlFor="userName" className="form-label">
+                  <FormLabel htmlFor="fullname" className="form-label">
                     Full Name
                   </FormLabel>
                   <Box
@@ -190,9 +198,7 @@ const Register: React.FC = () => {
                 <FormControl
                   sx={{ display: "flex", flexDirection: "column", gap: "10px" }}
                 >
-                  <FormLabel htmlFor="userName" className="form-label">
-                    Phone Number
-                  </FormLabel>
+                  <FormLabel className="form-label">Phone Number</FormLabel>
                   <Box
                     sx={{
                       display: "flex",
@@ -209,6 +215,8 @@ const Register: React.FC = () => {
                     }}
                   >
                     <PhoneInput
+                      international
+                      defaultCountry="AZ"
                       placeholder="e.g. 0123456789"
                       value={formData.phoneNumber}
                       onChange={(e: string | undefined) =>
@@ -342,7 +350,7 @@ const Register: React.FC = () => {
                   borderRadius: "8px",
                 }}
               >
-                {showLoader ? <SendFormLoader /> : "Create Your Account"}
+                {showLoader ? <WaitLoader /> : "Create Your Account"}
               </Button>
               <Box
                 sx={{

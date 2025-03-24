@@ -5,10 +5,10 @@ import { AxiosError } from "axios";
 import { api } from "../../utils/Api";
 
 type UserDataType = {
-  id: string;
+  _id: string;
   email: string;
-  exp?: number;
-  iat?: number;
+  userName: string;
+  phoneNumber: string;
 };
 interface ProfileData {
   loading: boolean;
@@ -21,7 +21,7 @@ interface ProfileData {
 const initialState: ProfileData = {
   loading: false,
   message: "",
-  user: { id: "", email: "" },
+  user: { _id: "", email: "", userName: "", phoneNumber: "" },
   error: null,
   isAuthenticated: false,
 };
@@ -31,9 +31,8 @@ export const getProfileToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.get("/profile");
-      return response.data;
+      return response.data.user;
     } catch (err) {
-      console.log(err);
       const error = err as AxiosError<{ message: string }>;
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch product"
@@ -64,7 +63,7 @@ export const userSlice = createSlice({
     authCheck: (state) => {
       state.isAuthenticated = true;
       const hasUser = JSON.stringify(state.isAuthenticated);
-      localStorage.setItem("auth", hasUser);
+      sessionStorage.setItem("auth", hasUser);
     },
   },
   extraReducers: (builder) => {
@@ -75,8 +74,9 @@ export const userSlice = createSlice({
 
     builder.addCase(
       getProfileToken.fulfilled,
-      (state, action: PayloadAction<ProfileData>) => {
-        state.user = action.payload.user;
+      (state, action: PayloadAction<UserDataType>) => {
+        state.user = action.payload;
+        state.loading = false;
       }
     );
 
@@ -95,9 +95,8 @@ export const userSlice = createSlice({
       state.error = null;
     });
     builder.addCase(deleteProfileToken.fulfilled, (state) => {
-      state.user = { id: "", email: "" };
-      // state.isAuthenticated = false;
-      localStorage.removeItem("auth");
+      state.user = { _id: "", email: "", userName: "", phoneNumber: "" };
+      sessionStorage.removeItem("auth");
       state.loading = false;
     });
     builder.addCase(

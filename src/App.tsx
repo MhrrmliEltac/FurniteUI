@@ -10,6 +10,7 @@ import Register from "./components/auth/Register";
 import "./assets/styles/home.css";
 import Profile from "./components/pages/Profile";
 import UseCheckAuth from "./components/utils/UseCheckAuth";
+import { ProtectedLayout } from "./components/Layouts/ProtectedLayout";
 
 const HomePage = lazy(() => import("./components/pages/Home"));
 const Navbar = lazy(() => import("./components/header/Navbar"));
@@ -36,7 +37,9 @@ const App = () => {
             <Route path="/register" element={<Register />} />
           </Route>
           {/* Profile səhifəsi üçün route */}
-          <Route path="/profile" element={<Profile />} />
+          <Route element={<ProtectedLayout />}>
+            <Route path="/profile" element={<Profile />} />
+          </Route>
           {/* <Route path="/add-product" element={<AddProduct />} />  Burada əlavə məhsul səhifəsini əlavə edə bilərsiniz */}
         </Routes>
         <Footer />

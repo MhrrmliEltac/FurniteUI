@@ -128,7 +128,7 @@ const Navbar = () => {
               />
             </li>
           </ul>
-          {isUser.id ? (
+          {isUser?._id ? (
             <>
               <DropdownMenu>
                 <DropdownMenuTrigger>
@@ -158,7 +158,10 @@ const Navbar = () => {
                     My Account
                   </DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="cursor-pointer hover:bg-red border-none rounded-none">
+                  <DropdownMenuItem
+                    onClick={() => navigate("/profile")}
+                    className="cursor-pointer hover:bg-red border-none rounded-none"
+                  >
                     Profile
                   </DropdownMenuItem>
                   <DropdownMenuSeparator />
@@ -290,7 +293,7 @@ const Navbar = () => {
                   </motion.li>
                 ))}
               </ul>
-              {isUser.id ? (
+              {isUser?._id ? (
                 <div className="flex justify-start gap-2 items-center">
                   <Icon
                     icon="lucide:user-round"

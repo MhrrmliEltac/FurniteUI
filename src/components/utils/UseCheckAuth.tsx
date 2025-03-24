@@ -4,7 +4,7 @@ import { getProfileToken } from "../store/slice/UserSlice";
 
 const UseCheckAuth = () => {
   const dispatch = useAppDispatch();
-  const isAuthenticated = localStorage.getItem("auth");
+  const isAuthenticated = sessionStorage.getItem("auth");
 
   useEffect(() => {
     if (isAuthenticated) {

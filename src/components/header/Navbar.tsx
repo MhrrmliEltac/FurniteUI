@@ -1,10 +1,10 @@
-import { useEffect, useRef, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
 import Logo from "../../assets/images/Logo.png";
 import LogoDark from "../../assets/images/Logo-fill.png";
+import Category from "../home/Category";
+import { useEffect, useRef, useState } from "react";
+import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { useLocation, useNavigate } from "react-router-dom";
-import Category from "../home/Category";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { deleteProfileToken } from "../store/slice/UserSlice";
 import { toast } from "sonner";
@@ -213,7 +213,9 @@ const Navbar = () => {
                 icon="iconamoon:menu-burger-horizontal"
                 width="30"
                 height="30"
-                style={{ color: scroll === 0 ? "#DAF1F3" : "#284551" }}
+                style={{
+                  color: scroll === 0 && path === "/" ? "#DAF1F3" : "#284551",
+                }}
                 onClick={handleOpen}
                 className="icon cursor-pointer"
               />
@@ -222,7 +224,9 @@ const Navbar = () => {
                 icon="proicons:cancel"
                 width="30"
                 height="30"
-                style={{ color: scroll === 0 ? "#DAF1F3" : "#284551" }}
+                style={{
+                  color: scroll === 0 && path === "/" ? "#DAF1F3" : "#284551",
+                }}
                 onClick={handleClose}
                 className="icon cursor-pointer"
               />

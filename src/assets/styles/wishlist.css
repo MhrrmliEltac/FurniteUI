@@ -4,6 +4,10 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  .btn {
+    padding: 10px 40px;
+    margin-top: 1rem;
+  }
   .wishlist-box {
     display: flex;
     width: 80%;

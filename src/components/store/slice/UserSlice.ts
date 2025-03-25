@@ -46,6 +46,7 @@ export const deleteProfileToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await api.post("/logout");
+      window.location.reload();
       return response.data;
     } catch (err) {
       const error = err as AxiosError<{ message: string }>;

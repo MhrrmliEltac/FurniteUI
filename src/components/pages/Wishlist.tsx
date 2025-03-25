@@ -1,8 +1,9 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
-import "../../assets/styles/wishlist.css";
+import axios from "axios";
 import ProductSlider from "../general/Swiper";
 import RecentlyViewed from "../general/RecentlyViewed";
+import "../../assets/styles/wishlist.css";
+import DontAuth from "../general/DontAuth";
 
 interface item {
   _id: string;
@@ -35,6 +36,7 @@ interface ProductDataType {
 const Wishlist = () => {
   const [allProduct, setAllProduct] = useState<item[] | null>(null);
   const [viewed, setViewed] = useState<ProductDataType[] | null>(null);
+  const isAuth = sessionStorage.getItem("auth");
 
   const getAllProducts = async () => {
     try {
@@ -62,16 +64,20 @@ const Wishlist = () => {
 
   return (
     <section className="wishlist-section" style={{ marginTop: "200px" }}>
-      <div className="wishlist-box">
-        <div className="wishlist-heading">
-          <h3>Wishlist</h3>
+      {!isAuth ? (
+        <DontAuth />
+      ) : (
+        <div className="wishlist-box">
+          <div className="wishlist-heading">
+            <h3>Wishlist</h3>
+          </div>
+          <ProductSlider productData={allProduct} show={{ isVisible: true }} />
+          <div className="viewed-heading">
+            <h3>Recently Viewed</h3>
+          </div>
+          <RecentlyViewed productData={viewed} show={{ isVisible: false }} />
         </div>
-        <ProductSlider productData={allProduct} show={{ isVisible: true }} />
-        <div className="viewed-heading">
-          <h3>Recently Viewed</h3>
-        </div>
-        <RecentlyViewed productData={viewed} show={{ isVisible: false }} />
-      </div>
+      )}
     </section>
   );
 };

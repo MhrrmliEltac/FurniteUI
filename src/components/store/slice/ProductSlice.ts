@@ -35,11 +35,13 @@ const initialState: {
   product: ProductDataType[];
   viewed: ProductDataType[];
   error: string | null;
+  activeTab: string;
 } = {
   loading: false,
   product: [],
   viewed: [],
   error: null,
+  activeTab: "Chair",
 };
 
 export const getProductById = createAsyncThunk(
@@ -79,7 +81,11 @@ export const getViewedProduct = createAsyncThunk(
 export const productSlice = createSlice({
   name: "product",
   initialState,
-  reducers: {},
+  reducers: {
+    changeActiveTab: (state, action: PayloadAction<string>) => {
+      state.activeTab = action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder.addCase(getProductById.pending, (state) => {
       state.loading = true;
@@ -125,6 +131,8 @@ export const productSlice = createSlice({
     );
   },
 });
+
+export const { changeActiveTab } = productSlice.actions;
 
 export const selectAll = (state: RootState) => state.productReducer.product;
 export const selectLoading = (state: RootState) => state.productReducer.loading;

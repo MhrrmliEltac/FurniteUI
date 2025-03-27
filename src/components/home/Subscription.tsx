@@ -24,7 +24,6 @@ const Subscription = () => {
       toast.error("Email is not valid!");
       return;
     }
-
     try {
       setIsPending(true);
       const response = await axios.post(

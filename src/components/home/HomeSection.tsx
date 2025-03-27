@@ -4,6 +4,7 @@ import axios from "axios";
 import ProductSlider from "../general/Swiper";
 import IsSaleSwiper from "./IsSaleSwiper";
 import Heading from "../general/Heading";
+import { useAppSelector } from "@/hooks/hooks";
 
 interface ProductDataType {
   _id: string;
@@ -32,13 +33,18 @@ const HomeSection = () => {
   const [isSaleProduct, setIsSaleProduct] = useState<ProductDataType[] | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const activeTab = useAppSelector((state) => state.productReducer.activeTab);
 
   const getProducts = async () => {
+    setIsLoading(true);
     const response = await axios.get(
-      "https://furniture-server-two.vercel.app/api/products/category?category=Chair"
+      `https://furniture-server-two.vercel.app/api/products/category?category=${activeTab}`
     );
     const product = await response.data;
     setProductData(product);
+    setIsLoading(false);
   };
 
   const allProductData = async () => {
@@ -53,14 +59,21 @@ const HomeSection = () => {
   };
 
   useEffect(() => {
-    getProducts();
     allProductData();
   }, []);
+
+  useEffect(() => {
+    getProducts();
+  }, [activeTab]);
 
   return (
     <motion.section className="home-section">
       <Heading title="Popular Chairs" btnTitle="View All" />
-      <ProductSlider productData={productData} show={{ isVisible: false }} />
+      <ProductSlider
+        isLoading={isLoading}
+        productData={productData}
+        show={{ isVisible: false }}
+      />
       <Heading title="Products on Sale" btnTitle="View All" />
       <IsSaleSwiper productData={isSaleProduct} />
     </motion.section>

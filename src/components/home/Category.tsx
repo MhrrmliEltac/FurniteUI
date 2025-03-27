@@ -1,18 +1,25 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import "../../assets/styles/category.css";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import { animation } from "../../utils/Animations";
 import { useLocation } from "react-router-dom";
+import { useAppDispatch } from "@/hooks/hooks";
+import { changeActiveTab } from "../store/slice/ProductSlice";
 
 const Category = () => {
   const [activeTab, setActiveTab] = useState<string>("");
   const location = useLocation();
+  const dispatch = useAppDispatch();
   const path = location.pathname;
 
-  const changeActiveTab = (tab: string) => {
-    setActiveTab(tab);
-  };
+  const handleActiveTab = useCallback(
+    (tab: string) => {
+      dispatch(changeActiveTab(tab));
+      setActiveTab(tab);
+    },
+    [dispatch]
+  );
 
   return (
     <motion.section
@@ -29,7 +36,7 @@ const Category = () => {
             (tab, index) => (
               <li key={index} className={`${activeTab === tab && "active"}`}>
                 <a
-                  onClick={() => changeActiveTab(tab)}
+                  onClick={() => handleActiveTab(tab)}
                   className={`category-link`}
                 >
                   {tab}

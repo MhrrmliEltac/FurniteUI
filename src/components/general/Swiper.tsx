@@ -83,7 +83,7 @@ const ProductSlider = ({
         scrollbar={{ draggable: true }}
         modules={[Scrollbar]}
         breakpoints={{
-          480: { slidesPerView: 2 },
+          480: { slidesPerView: 1 },
           768: { slidesPerView: 3 },
           1024: { slidesPerView: 4 },
           1200: { slidesPerView: 5 },

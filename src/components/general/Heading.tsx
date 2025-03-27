@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import "../../assets/styles/general.css";
-import { animation } from "../utils/Animations";
+import { animation } from "../../utils/Animations";
 
 interface HeadingProps {
   title: string;

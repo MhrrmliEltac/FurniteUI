@@ -2,7 +2,7 @@ import { useState } from "react";
 import "../../assets/styles/category.css";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
-import { animation } from "../utils/Animations";
+import { animation } from "../../utils/Animations";
 import { useLocation } from "react-router-dom";
 
 const Category = () => {

@@ -5,7 +5,7 @@ import "swiper/css/scrollbar";
 import "../../assets/styles/swiper.css";
 import { Scrollbar } from "swiper/modules";
 import { motion } from "framer-motion";
-import { animation } from "../utils/Animations";
+import { animation } from "../../utils/Animations";
 import { Skeleton, Stack } from "@mui/material";
 
 interface ProductDataType {

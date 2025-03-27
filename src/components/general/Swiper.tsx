@@ -2,8 +2,12 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Icon } from "@iconify/react";
 import { createSearchParams, useNavigate } from "react-router-dom";
 import { Scrollbar } from "swiper/modules";
+import { toast } from "sonner";
+import { useAppDispatch } from "@/hooks/hooks";
+import { deleteFavorite } from "../store/slice/FavoriteSlice";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
+import axios from "axios";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../../assets/styles/swiper.css";
@@ -34,11 +38,42 @@ interface ShowProps {
 const ProductSlider = ({
   productData,
   show,
+  isFavorite,
+  isLoading,
 }: {
   productData: ProductDataType[] | null;
   show: ShowProps;
+  isFavorite?: boolean;
+  isLoading?: boolean;
 }) => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const deleteFavoriteById = async (id: string) => {
+    try {
+      dispatch(deleteFavorite(id));
+      toast.success("Favorite deleted successfully");
+    } catch (error) {
+      toast.error("Failed to delete favorite");
+    }
+  };
+
+  const addFavorite = async (id: string) => {
+    try {
+      await axios.post(
+        "https://furniture-server-two.vercel.app/api/favorite/add-favorite",
+        {
+          favorite: id,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+      toast.success("Favorite added successfully");
+    } catch (error) {
+      toast.error("Failed to add favorite");
+    }
+  };
 
   return (
     <section className="swiper-section">
@@ -54,10 +89,11 @@ const ProductSlider = ({
           1200: { slidesPerView: 5 },
         }}
       >
-        {productData && productData.length > 0
-          ? productData.map((product) => (
-              <SwiperSlide
-                key={product._id}
+        {productData && productData.length > 0 ? (
+          productData.map((product) => (
+            <SwiperSlide key={product._id}>
+              <div
+                className="slider-head"
                 onClick={() =>
                   navigate({
                     pathname: "/product-detail",
@@ -67,91 +103,107 @@ const ProductSlider = ({
                   })
                 }
               >
-                <div className="slider-head">
-                  <img
-                    src={product.images[0] || "/default-image.jpg"}
-                    alt={product.name}
-                  />
-                </div>
-                <div className="slider-body">
-                  <div className="slider-heading">
-                    <h4>{product.name}</h4>
+                <img
+                  src={product.images[0] || "/default-image.jpg"}
+                  alt={product.name}
+                />
+              </div>
+              <div className="slider-body">
+                <div className="slider-heading">
+                  <h4>{product.name}</h4>
+                  {isFavorite ? (
+                    <Icon
+                      icon="mingcute:delete-fill"
+                      width="24"
+                      height="24"
+                      style={{ color: "#B0BFC9", cursor: "pointer" }}
+                      onClick={() => deleteFavoriteById(product._id)}
+                    />
+                  ) : (
                     <Icon
                       icon="mdi:heart"
                       width="24"
                       height="24"
                       style={{ color: "#B0BFC9", cursor: "pointer" }}
+                      onClick={() => addFavorite(product._id)}
+                    />
+                  )}
+                </div>
+                <div className="color-box">
+                  <p className="product-color-count">
+                    {product.colors.length} Colors
+                  </p>
+                  {show?.isVisible &&
+                    product.colors.map((color, index) => (
+                      <span
+                        key={index}
+                        style={{
+                          backgroundColor: color,
+                          width: 20,
+                          height: 20,
+                          display: "inline-block",
+                          marginRight: 5,
+                          borderRadius: "50%",
+                          border: "1px solid #333e47",
+                          cursor: "pointer",
+                        }}
+                      ></span>
+                    ))}
+                </div>
+                <div className="price-box">
+                  <p className="product-price">
+                    {product.isOnSale ? (
+                      <>
+                        <span
+                          style={{
+                            textDecoration: "line-through",
+                            color: "#bd6969",
+                            marginRight: "8px",
+                          }}
+                        >
+                          ${product.price}
+                        </span>
+                        ${product.discountPrice}
+                      </>
+                    ) : (
+                      `$${product.price}`
+                    )}
+                  </p>
+                  <div className="icon-box">
+                    <Icon
+                      icon="mingcute:shopping-bag-2-line"
+                      width="25"
+                      height="25"
+                      className="icon"
+                      style={{
+                        color: "#2C6272",
+                      }}
                     />
                   </div>
-                  <div className="color-box">
-                    <p className="product-color-count">
-                      {product.colors.length} Colors
-                    </p>
-                    {show?.isVisible &&
-                      product.colors.map((color, index) => (
-                        <span
-                          key={index}
-                          style={{
-                            backgroundColor: color,
-                            width: 20,
-                            height: 20,
-                            display: "inline-block",
-                            marginRight: 5,
-                            borderRadius: "50%",
-                            border: "1px solid #333e47",
-                            cursor: "pointer",
-                          }}
-                        ></span>
-                      ))}
-                  </div>
-                  <div className="price-box">
-                    <p className="product-price">
-                      {product.isOnSale ? (
-                        <>
-                          <span
-                            style={{
-                              textDecoration: "line-through",
-                              color: "#bd6969",
-                              marginRight: "8px",
-                            }}
-                          >
-                            ${product.price}
-                          </span>
-                          ${product.discountPrice}
-                        </>
-                      ) : (
-                        `$${product.price}`
-                      )}
-                    </p>
-                    <div className="icon-box">
-                      <Icon
-                        icon="mingcute:shopping-bag-2-line"
-                        width="25"
-                        height="25"
-                        className="icon"
-                        style={{
-                          color: "#2C6272",
-                        }}
-                      />
-                    </div>
-                  </div>
                 </div>
-              </SwiperSlide>
-            ))
-          : Array.from({ length: 5 }).map((_, index) => (
-              <SwiperSlide key={index}>
-                <Stack spacing={1}>
-                  <Skeleton variant="rounded" width={250} height={200} />
-                  <Skeleton
-                    variant="text"
-                    sx={{ fontSize: "1rem" }}
-                    width={200}
-                  />
-                  <Skeleton variant="text" width={150} />
-                  <Skeleton variant="rounded" width={100} height={20} />
-                </Stack>
-              </SwiperSlide>
-            ))}
+              </div>
+            </SwiperSlide>
+          ))
+        ) : isLoading === true ? (
+          Array.from({ length: 5 }).map((_, index) => (
+            <SwiperSlide key={index}>
+              <Stack spacing={1}>
+                <Skeleton variant="rounded" width={250} height={200} />
+                <Skeleton
+                  variant="text"
+                  sx={{ fontSize: "1rem" }}
+                  width={200}
+                />
+                <Skeleton variant="text" width={150} />
+                <Skeleton variant="rounded" width={100} height={20} />
+              </Stack>
+            </SwiperSlide>
+          ))
+        ) : (
+          <p className="font-semibold text-3xl text-[#333e47]">
+            Empty Favorite
+          </p>
+        )}
       </Swiper>
     </section>
   );

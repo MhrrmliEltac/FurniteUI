@@ -4,7 +4,7 @@ import { Box, Button, FormControl, FormGroup, FormLabel } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import { isAxiosError } from "axios";
-import { api } from "../utils/Api";
+import { api } from "../../utils/Api";
 import AuthHeading from "./AuthHeading";
 import RegisterImage from "../../assets/images/unsplash__HqHX3LBN18.svg";
 import PhoneInput from "react-phone-number-input";

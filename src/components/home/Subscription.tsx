@@ -6,7 +6,7 @@ import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
 import "../../assets/styles/subscription.css";
-import { animation } from "../utils/Animations";
+import { animation } from "../../utils/Animations";
 
 const Subscription = () => {
   const [email, setEmail] = useState<string>("");

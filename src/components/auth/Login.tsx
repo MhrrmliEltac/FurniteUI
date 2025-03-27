@@ -5,7 +5,7 @@ import LoginImage from "../../assets/images/login-rightt-image.svg";
 import { Link, useNavigate } from "react-router-dom";
 import { isAxiosError } from "axios";
 import { toast } from "sonner";
-import { api } from "../utils/Api";
+import { api } from "../../utils/Api";
 import AuthHeading from "./AuthHeading";
 import "../../assets/styles/login.css";
 import { useAppDispatch } from "../../hooks/hooks";

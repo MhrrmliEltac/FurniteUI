@@ -9,7 +9,7 @@ import SuspenseLayout from "./components/Layouts/SuspenseLayout";
 import Register from "./components/auth/Register";
 import "./assets/styles/home.css";
 import Profile from "./components/pages/Profile";
-import UseCheckAuth from "./components/utils/UseCheckAuth";
+import UseCheckAuth from "./utils/UseCheckAuth";
 import { ProtectedLayout } from "./components/Layouts/ProtectedLayout";
 
 const HomePage = lazy(() => import("./components/pages/Home"));

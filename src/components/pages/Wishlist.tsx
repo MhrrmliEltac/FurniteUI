@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
 import axios from "axios";
 import ProductSlider from "../general/Swiper";
 import RecentlyViewed from "../general/RecentlyViewed";
-import "../../assets/styles/wishlist.css";
 import DontAuth from "../general/DontAuth";
-
+import { useEffect, useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
+import { getFavorite } from "../store/slice/FavoriteSlice";
+import "../../assets/styles/wishlist.css";
 interface item {
   _id: string;
   itemId: string;
@@ -26,7 +27,7 @@ interface item {
   isOnSale: boolean;
 }
 
-interface ProductDataType {
+interface ViewedProductDataType {
   _id: string;
   itemId: item;
   userId: string;
@@ -34,20 +35,13 @@ interface ProductDataType {
 }
 
 const Wishlist = () => {
-  const [allProduct, setAllProduct] = useState<item[] | null>(null);
-  const [viewed, setViewed] = useState<ProductDataType[] | null>(null);
+  const [viewed, setViewed] = useState<ViewedProductDataType[] | null>(null);
+  const dispatch = useAppDispatch();
   const isAuth = sessionStorage.getItem("auth");
-
-  const getAllProducts = async () => {
-    try {
-      const response = await axios.get(
-        "https://furniture-server-two.vercel.app/api/products/category?category=Chair"
-      );
-      setAllProduct(response.data);
-    } catch (error) {
-      console.error("Failed to fetch products:", error);
-    }
-  };
+  const favoriteState = useAppSelector(
+    (state) => state.favoriteReducer.favorite
+  );
+  const isLoading = useAppSelector((state) => state.favoriteReducer.loading);
 
   const getAllViewed = async () => {
     const response = await axios.get(
@@ -58,8 +52,8 @@ const Wishlist = () => {
   };
 
   useEffect(() => {
-    getAllProducts();
     getAllViewed();
+    dispatch(getFavorite());
   }, []);
 
   return (
@@ -71,7 +65,12 @@ const Wishlist = () => {
           <div className="wishlist-heading">
             <h3>Wishlist</h3>
           </div>
-          <ProductSlider productData={allProduct} show={{ isVisible: true }} />
+          <ProductSlider
+            productData={favoriteState}
+            show={{ isVisible: true }}
+            isFavorite={true}
+            isLoading={isLoading}
+          />
           <div className="viewed-heading">
             <h3>Recently Viewed</h3>
           </div>

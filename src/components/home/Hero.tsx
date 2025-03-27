@@ -1,6 +1,6 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
-import { animation } from "../utils/Animations";
+import { animation } from "../../utils/Animations";
 import HeroImage from "../../assets/images/Frame 427319350.png";
 
 const Hero = () => {

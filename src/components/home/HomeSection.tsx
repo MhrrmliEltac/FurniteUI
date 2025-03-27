@@ -35,8 +35,7 @@ const HomeSection = () => {
 
   const getProducts = async () => {
     const response = await axios.get(
-      "https://furniture-server-two.vercel.app/api/products/category?category=Chair",
-      // "http://localhost:4000/api/products/category?category=Chair",
+      "https://furniture-server-two.vercel.app/api/products/category?category=Chair"
     );
     const product = await response.data;
     setProductData(product);

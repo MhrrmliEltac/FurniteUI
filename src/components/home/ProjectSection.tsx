@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import "../../assets/styles/project.css";
-import { fadeInAnimationVariants } from "../utils/fadeInAnimationVariant";
-import { animation } from "../utils/Animations";
+import { fadeInAnimationVariants } from "../../utils/fadeInAnimationVariant";
+import { animation } from "../../utils/Animations";
 
 interface ProjectDataType {
   name: string;

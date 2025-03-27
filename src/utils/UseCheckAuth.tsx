@@ -1,6 +1,6 @@
 import { useAppDispatch } from "@/hooks/hooks";
 import { useEffect } from "react";
-import { getProfileToken } from "../store/slice/UserSlice";
+import { getProfileToken } from "../components/store/slice/UserSlice";
 
 const UseCheckAuth = () => {
   const dispatch = useAppDispatch();

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import { AxiosError } from "axios";
-import { api } from "../../utils/Api";
+import { api } from "../../../utils/Api";
 
 type UserDataType = {
   _id: string;

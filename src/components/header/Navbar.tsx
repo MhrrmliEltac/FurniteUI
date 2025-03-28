@@ -21,6 +21,7 @@ import "../../assets/styles/navbar.css";
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
   const [scroll, setScroll] = useState<number>(0);
+  const [profileDropdown, setProfileDropdown] = useState<boolean>(false);
   const navRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -296,44 +297,81 @@ const Navbar = () => {
                     ) : null}
                   </motion.li>
                 ))}
+                {isUser?._id ? (
+                  <div className="flex flex-col items-start justify-start">
+                    <div
+                      className="flex justify-start gap-2 items-center"
+                      onClick={() => setProfileDropdown(!profileDropdown)}
+                    >
+                      <Icon
+                        icon="lucide:user-round"
+                        width="28"
+                        height="28"
+                        style={{
+                          color: "#DAF1F3",
+                          cursor: "pointer",
+                        }}
+                      />
+                      <p className="text-[#DAF1F3]">User</p>
+                    </div>
+                    <AnimatePresence>
+                      {profileDropdown && (
+                        <motion.ul className="flex flex-col gap-5 text-white profile-list">
+                          <motion.li
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.01 }}
+                            exit={{ opacity: 0 }}
+                            onClick={() => navigate("/profile")}
+                          >
+                            Profile
+                          </motion.li>
+                          <motion.li
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.07 }}
+                            exit={{ opacity: 0 }}
+                          >
+                            Settings
+                          </motion.li>
+                          <motion.li
+                            initial={{ opacity: 0 }}
+                            animate={{ opacity: 1 }}
+                            transition={{ delay: 0.13 }}
+                            exit={{ opacity: 0 }}
+                            onClick={logOut}
+                          >
+                            Log out
+                          </motion.li>
+                        </motion.ul>
+                      )}
+                    </AnimatePresence>
+                  </div>
+                ) : (
+                  <>
+                    <motion.button
+                      initial={{ translateX: -20, opacity: 0 }}
+                      animate={{ translateX: 0, opacity: 1 }}
+                      exit={{ opacity: 0, translateX: -20 }}
+                      transition={{ duration: 0.3 }}
+                      className="btn first-btn"
+                      onClick={() => navigate("/login")}
+                    >
+                      Log in
+                    </motion.button>
+                    <motion.button
+                      initial={{ translateX: -20, opacity: 0 }}
+                      animate={{ translateX: 0, opacity: 1 }}
+                      exit={{ opacity: 0, translateX: -20 }}
+                      transition={{ duration: 0.6 }}
+                      className="btn primary-btn"
+                      onClick={() => navigate("/register")}
+                    >
+                      Create an Account
+                    </motion.button>
+                  </>
+                )}
               </ul>
-              {isUser?._id ? (
-                <div className="flex justify-start gap-2 items-center">
-                  <Icon
-                    icon="lucide:user-round"
-                    width="28"
-                    height="28"
-                    style={{
-                      color: "#DAF1F3",
-                      cursor: "pointer",
-                    }}
-                  />
-                  <p className="text-[#DAF1F3]">Profile</p>
-                </div>
-              ) : (
-                <>
-                  <motion.button
-                    initial={{ translateX: -20, opacity: 0 }}
-                    animate={{ translateX: 0, opacity: 1 }}
-                    exit={{ opacity: 0, translateX: -20 }}
-                    transition={{ duration: 0.3 }}
-                    className="btn first-btn"
-                    onClick={() => navigate("/login")}
-                  >
-                    Log in
-                  </motion.button>
-                  <motion.button
-                    initial={{ translateX: -20, opacity: 0 }}
-                    animate={{ translateX: 0, opacity: 1 }}
-                    exit={{ opacity: 0, translateX: -20 }}
-                    transition={{ duration: 0.6 }}
-                    className="btn primary-btn"
-                    onClick={() => navigate("/register")}
-                  >
-                    Create an Account
-                  </motion.button>
-                </>
-              )}
             </motion.div>
           )}
         </AnimatePresence>

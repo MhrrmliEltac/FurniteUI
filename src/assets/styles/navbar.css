@@ -103,6 +103,14 @@
     }
     .burger-menu-list {
       display: none;
+      height: 100vh;
+    }
+    .profile-list {
+      padding-left: 40px;
+      padding-top: 20px;
+      li {
+        list-style: disc;
+      }
     }
   }
 }

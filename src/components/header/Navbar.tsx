@@ -1,10 +1,10 @@
 import Logo from "../../assets/images/Logo.png";
 import LogoDark from "../../assets/images/Logo-fill.png";
 import Category from "../home/Category";
-import { useEffect, useRef, useState } from "react";
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Icon } from "@iconify/react/dist/iconify.js";
-import { useLocation, useNavigate } from "react-router-dom";
+import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
 import { deleteProfileToken } from "../store/slice/UserSlice";
 import { toast } from "sonner";
@@ -17,11 +17,18 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import "../../assets/styles/navbar.css";
+import axios from "axios";
+import { ProductDataType } from "../store/slice/ProductSlice";
+import { Button } from "@mui/material";
+import { debounce } from "lodash";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
   const [scroll, setScroll] = useState<number>(0);
   const [profileDropdown, setProfileDropdown] = useState<boolean>(false);
+  const [searchInp, setSearchInp] = useState<string>("");
+  const [result, setResult] = useState<ProductDataType[] | null>(null);
+  const [showSearch, setShowSearch] = useState<boolean>(false);
   const navRef = useRef<HTMLDivElement | null>(null);
   const navigate = useNavigate();
   const location = useLocation();
@@ -30,10 +37,29 @@ const Navbar = () => {
   const path = location.pathname;
 
   useEffect(() => {
-    const handleScroll = () => [setScroll(window.scrollY)];
+    const handleScroll = () => setScroll(window.scrollY);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const getSearchData = async (name: string) => {
+    try {
+      const res = await axios.get(
+        `http://localhost:4000/api/search?query=${name}`
+      );
+      const product = await res.data.product;
+      setResult(product);
+    } catch (error) {
+      toast.error("Product don't found");
+    }
+  };
+
+  const debouncedSearch = useCallback(
+    debounce((query: string) => {
+      getSearchData(query);
+    }, 500),
+    []
+  );
 
   const handleOpen = () => {
     setBurgerMenuOpen(!burgerMenuOpen);
@@ -68,6 +94,24 @@ const Navbar = () => {
     }
   };
 
+  const handleChangeSearchInp = (e: ChangeEvent<HTMLInputElement>) => {
+    setSearchInp(e.target.value);
+    if (e.target.value) {
+      debouncedSearch(e.target.value);
+    }
+  };
+
+  const handleNavigate = (id: string) => {
+    navigate({
+      pathname: "/product-detail",
+      search: `${createSearchParams({
+        id: id,
+      })}`,
+    });
+    setResult(null);
+    setSearchInp("");
+  };
+
   return (
     <motion.section
       initial={{ y: -100 }}
@@ -82,7 +126,7 @@ const Navbar = () => {
         height: path !== "/" && scroll === 0 ? "150px" : "80px",
       }}
     >
-      <motion.nav className="navbar">
+      <motion.nav className="navbar relative">
         <div className="left-side">
           <img
             src={scroll === 0 && path === "/" ? Logo : LogoDark}
@@ -91,6 +135,75 @@ const Navbar = () => {
             onClick={() => navigate("/")}
           />
         </div>
+
+        {showSearch && (
+          <AnimatePresence>
+            <motion.div
+              initial={{ width: 0 }}
+              animate={{ width: "60%" }}
+              transition={{ duration: 0.5 }}
+              exit={{ width: 0 }}
+              className="w-[50%] flex justify-end"
+            >
+              <input
+                className={`w-full ${
+                  location.pathname === "/"
+                    ? "placeholder:text-white"
+                    : "placeholder:text-[#284551]"
+                } border-b-2 outline-none ${
+                  location.pathname === "/" ? "text-white" : "text-[#284551]"
+                }`}
+                type="search"
+                name="search"
+                id="search"
+                placeholder="Search"
+                value={searchInp}
+                onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                  handleChangeSearchInp(e)
+                }
+              />
+            </motion.div>
+          </AnimatePresence>
+        )}
+
+        {result && result.length > 0 && searchInp && (
+          <div className=" absolute left-[0%] top-[100%] w-full rounded-md search-product shadow-md z-[9999]">
+            {result?.map((product: ProductDataType) => (
+              <div
+                key={product._id}
+                className="flex gap-5 items-center justify-between product-box"
+              >
+                <div className="w-fit flex items-center gap-5">
+                  <div className="w-16 h-16">
+                    <img
+                      src={product.images[0]}
+                      alt=""
+                      className="object-cover h-full w-full rounded-lg"
+                    />
+                  </div>
+                  <p className="text-white font-bold text-xl">{product.name}</p>
+                </div>
+                <Button
+                  sx={{
+                    display: "flex",
+                    padding: "0.5rem 2rem",
+                    background: "white",
+                    color: "black",
+                    fontWeight: "bold",
+                    fontSize: "15px",
+                    "&:hover": {
+                      boxShadow: "2px 2px 4px 2px rgba(133, 88, 170, 1)",
+                      transition: "all 0.2s ease-in",
+                    },
+                  }}
+                  onClick={() => handleNavigate(product._id)}
+                >
+                  More
+                </Button>
+              </div>
+            ))}
+          </div>
+        )}
 
         <div className="right-side">
           <ul className="menu-list">
@@ -103,6 +216,7 @@ const Navbar = () => {
                 style={{
                   color: scroll === 0 && path === "/" ? "#DAF1F3" : "#284551",
                 }}
+                onClick={() => setShowSearch(!showSearch)}
               />
             </li>
             <li>

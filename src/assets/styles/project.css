@@ -7,7 +7,7 @@
   background-color: #284551;
 
   .projects {
-    width: 100%;
+    width: 90%;
     max-width: 1560px;
     display: flex;
     flex-direction: column;

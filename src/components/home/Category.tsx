@@ -1,25 +1,25 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import "../../assets/styles/category.css";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import { animation } from "../../utils/Animations";
-import { useLocation } from "react-router-dom";
-import { useAppDispatch } from "@/hooks/hooks";
-import { changeActiveTab } from "../store/slice/ProductSlice";
+import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
 
 const Category = () => {
   const [activeTab, setActiveTab] = useState<string>("");
   const location = useLocation();
-  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const path = location.pathname;
 
-  const handleActiveTab = useCallback(
-    (tab: string) => {
-      dispatch(changeActiveTab(tab));
-      setActiveTab(tab);
-    },
-    [dispatch]
-  );
+  const handleActiveTab = (tab: string) => {
+    setActiveTab(tab);
+    navigate({
+      pathname: "/products",
+      search: `${createSearchParams({
+        category: tab,
+      })}`,
+    });
+  };
 
   return (
     <motion.section

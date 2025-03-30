@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/hooks/hooks";
 import { deleteFavorite } from "../store/slice/FavoriteSlice";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import axios, { AxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../../assets/styles/swiper.css";
@@ -75,10 +75,9 @@ const ProductSlider = ({
       }
       toast.error("Unauthorized access!");
     } catch (error) {
-      const axiosError = error as AxiosError;
-      const errorMessage = (axiosError.response?.data as { message: string })
-        ?.message;
-      toast.error(errorMessage);
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     }
   };
 

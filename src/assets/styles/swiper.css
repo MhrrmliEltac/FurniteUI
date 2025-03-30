@@ -6,6 +6,7 @@
   justify-content: flex-end;
   .swiper {
     width: 100%;
+    max-width: 1560px;
     height: 100%;
     padding-bottom: 15px;
     transition: all 0.5s ease;

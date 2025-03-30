@@ -6,7 +6,7 @@
   align-items: center;
   margin: 24px 0px;
   .category-section-box {
-    width: 100%;
+    width: 90%;
     max-width: 1560px;
     display: flex;
     justify-content: space-between;

@@ -1,0 +1,12 @@
+.products-section {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 12rem auto 0rem auto;
+  .category-name {
+    margin-bottom: 2rem;
+  }
+  .product-body {
+    margin-top: 2rem;
+  }
+}

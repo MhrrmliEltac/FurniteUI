@@ -11,7 +11,7 @@ import RecentlyViewed, { ProductDataType } from "../general/RecentlyViewed";
 import Subscription from "../home/Subscription";
 import { Skeleton } from "@mui/material";
 import { toast } from "sonner";
-import axios, { AxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import "../../assets/styles/productdetail.css";
 
 type Dimensions = {
@@ -79,7 +79,9 @@ const ProductDetail = () => {
       const response = await dispatch(getViewedProduct());
       setViewed(response.payload);
     } catch (error) {
-      console.log(error);
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     }
   };
 
@@ -104,10 +106,9 @@ const ProductDetail = () => {
       }
       toast.error("Unauthorized access!");
     } catch (error) {
-      const axiosError = error as AxiosError;
-      const errorMessage = (axiosError.response?.data as { message: string })
-        ?.message;
-      toast.error(errorMessage);
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     }
   };
 

@@ -1,7 +1,7 @@
 import { Icon } from "@iconify/react/dist/iconify.js";
 import Vector from "../../assets/images/Vector 51.png";
 import Overrlay from "../../assets/images/White-Minimalist-Elegant-Interior-Design-Instagram-Post-1.png";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { ChangeEvent, useState } from "react";
 import { toast } from "sonner";
 import { motion } from "framer-motion";
@@ -40,8 +40,9 @@ const Subscription = () => {
         toast.error("Failed to send email. Try again.");
       }
     } catch (error) {
-      console.error(error);
-      toast.error("Server error. Please try again later.");
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     }
   };
 

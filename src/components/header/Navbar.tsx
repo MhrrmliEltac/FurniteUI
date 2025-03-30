@@ -17,7 +17,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import "../../assets/styles/navbar.css";
-import axios from "axios";
+import axios, { isAxiosError } from "axios";
 import { ProductDataType } from "../store/slice/ProductSlice";
 import { Button } from "@mui/material";
 import { debounce } from "lodash";
@@ -50,7 +50,9 @@ const Navbar = () => {
       const product = await res.data.product;
       setResult(product);
     } catch (error) {
-      toast.error("Product don't found");
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     }
   };
 

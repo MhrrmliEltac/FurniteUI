@@ -10,6 +10,8 @@ import PaymentPartner from "../productDetail/PaymentPartner";
 import RecentlyViewed, { ProductDataType } from "../general/RecentlyViewed";
 import Subscription from "../home/Subscription";
 import { Skeleton } from "@mui/material";
+import { toast } from "sonner";
+import axios, { AxiosError } from "axios";
 import "../../assets/styles/productdetail.css";
 
 type Dimensions = {
@@ -47,6 +49,7 @@ const ProductDetail = () => {
   const image: string | undefined = productById?.images[0];
   const productId: string | null = searchParams.get("id");
   const dispatch = useAppDispatch();
+  const isAuth = sessionStorage.getItem("auth");
 
   const increaseQuantity = useCallback(() => {
     if (quantity < 10) {
@@ -84,6 +87,29 @@ const ProductDetail = () => {
     getProduct();
     getAllViewedProduct();
   }, []);
+
+  const addFavorite = async (id: string) => {
+    try {
+      if (isAuth) {
+        const res = await axios.post(
+          "https://furniture-server-two.vercel.app/api/favorite/add-favorite",
+          {
+            favorite: id,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        toast.success(res?.data.message);
+      }
+      toast.error("Unauthorized access!");
+    } catch (error) {
+      const axiosError = error as AxiosError;
+      const errorMessage = (axiosError.response?.data as { message: string })
+        ?.message;
+      toast.error(errorMessage);
+    }
+  };
 
   return (
     <section className="product-detail-section">
@@ -133,6 +159,7 @@ const ProductDetail = () => {
                       style={{
                         color: "#284551",
                       }}
+                      onClick={() => addFavorite(productById._id)}
                     />
                     <Icon
                       icon="mynaui:share"

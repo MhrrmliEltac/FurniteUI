@@ -152,7 +152,7 @@ const Navbar = () => {
                     : "placeholder:text-[#284551]"
                 } border-b-2 outline-none ${
                   location.pathname === "/" ? "text-white" : "text-[#284551]"
-                }`}
+                } appearance-none`}
                 type="search"
                 name="search"
                 id="search"

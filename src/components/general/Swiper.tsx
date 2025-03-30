@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/hooks/hooks";
 import { deleteFavorite } from "../store/slice/FavoriteSlice";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../../assets/styles/swiper.css";
@@ -48,6 +48,7 @@ const ProductSlider = ({
 }) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const isAuth = sessionStorage.getItem("auth");
 
   const deleteFavoriteById = async (id: string) => {
     try {
@@ -60,18 +61,24 @@ const ProductSlider = ({
 
   const addFavorite = async (id: string) => {
     try {
-      await axios.post(
-        "https://furniture-server-two.vercel.app/api/favorite/add-favorite",
-        {
-          favorite: id,
-        },
-        {
-          withCredentials: true,
-        }
-      );
-      toast.success("Favorite added successfully");
+      if (isAuth) {
+        const res = await axios.post(
+          "https://furniture-server-two.vercel.app/api/favorite/add-favorite",
+          {
+            favorite: id,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        toast.success(res?.data.message);
+      }
+      toast.error("Unauthorized access!");
     } catch (error) {
-      toast.error("Failed to add favorite");
+      const axiosError = error as AxiosError;
+      const errorMessage = (axiosError.response?.data as { message: string })
+        ?.message;
+      toast.error(errorMessage);
     }
   };
 

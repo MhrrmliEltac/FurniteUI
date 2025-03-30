@@ -7,7 +7,6 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import "../../assets/styles/allproduct.css";
 import Loader from "../general/RoundedLoader";
-import { useAppDispatch } from "@/hooks/hooks";
 
 const AllProducts = () => {
   const [searchParams, _] = useSearchParams();

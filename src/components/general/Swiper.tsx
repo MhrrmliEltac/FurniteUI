@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/hooks/hooks";
 import { deleteFavorite } from "../store/slice/FavoriteSlice";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import axios, {  isAxiosError } from "axios";
+import axios, { isAxiosError } from "axios";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../../assets/styles/swiper.css";
@@ -83,14 +83,17 @@ const ProductSlider = ({
 
   const addToCart = async (id: string) => {
     try {
-      const res = await axios.post("http://localhost:4000/api/cart/add-cart", {
-        items: [
-          {
-            productId: id,
-            quantity: 1,
-          },
-        ],
-      });
+      const res = await axios.post(
+        "https://furniture-server-two.vercel.app/api/cart/add-cart",
+        {
+          items: [
+            {
+              productId: id,
+              quantity: 1,
+            },
+          ],
+        }
+      );
       console.log(res);
     } catch (error) {
       if (isAxiosError(error)) {

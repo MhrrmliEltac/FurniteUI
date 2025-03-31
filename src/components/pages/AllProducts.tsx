@@ -5,8 +5,8 @@ import { ProductDataType } from "../store/slice/ProductSlice";
 import { toast } from "sonner";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
-import "../../assets/styles/allproduct.css";
 import Loader from "../general/RoundedLoader";
+import "../../assets/styles/allproduct.css";
 
 const AllProducts = () => {
   const [searchParams, _] = useSearchParams();

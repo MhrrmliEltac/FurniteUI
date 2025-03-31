@@ -7,7 +7,7 @@ import { useAppDispatch } from "@/hooks/hooks";
 import { deleteFavorite } from "../store/slice/FavoriteSlice";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
-import axios, { isAxiosError } from "axios";
+import axios, { AxiosError, isAxiosError } from "axios";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../../assets/styles/swiper.css";
@@ -81,6 +81,24 @@ const ProductSlider = ({
     }
   };
 
+  const addToCart = async (id: string) => {
+    try {
+      const res = await axios.post("http://localhost:4000/api/cart/add-cart", {
+        items: [
+          {
+            productId: id,
+            quantity: 1,
+          },
+        ],
+      });
+      console.log(res);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    }
+  };
+
   return (
     <section className="swiper-section">
       <Swiper
@@ -96,7 +114,7 @@ const ProductSlider = ({
         }}
       >
         {productData && productData.length > 0 ? (
-          productData.map((product) => (
+          productData.map((product: ProductDataType) => (
             <SwiperSlide key={product._id}>
               <div
                 className="slider-head"
@@ -184,6 +202,7 @@ const ProductSlider = ({
                       style={{
                         color: "#2C6272",
                       }}
+                      onClick={() => addToCart(product._id)}
                     />
                   </div>
                 </div>

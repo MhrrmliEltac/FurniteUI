@@ -84,18 +84,21 @@ const ProductSlider = ({
 
   const addToCart = async (id: string) => {
     try {
-      const res = await axios.post(
-        "https://furniture-server-two.vercel.app/api/cart/add-cart",
-        {
-          items: [
-            {
-              productId: id,
-              quantity: 1,
-            },
-          ],
-        }
-      );
-      console.log(res);
+      if (isAuth) {
+        const res = await axios.post(
+          "https://furniture-server-two.vercel.app/api/cart/add-cart",
+          {
+            productId: id,
+            quantity: 1,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        toast.success(res.data.message);
+      } else {
+        toast.error("Unauthorized access!");
+      }
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);

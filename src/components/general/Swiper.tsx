@@ -72,8 +72,9 @@ const ProductSlider = ({
           }
         );
         toast.success(res?.data.message);
+      } else {
+        toast.error("Unauthorized access!");
       }
-      toast.error("Unauthorized access!");
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);

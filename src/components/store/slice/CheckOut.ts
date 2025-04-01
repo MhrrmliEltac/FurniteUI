@@ -22,7 +22,6 @@ export const getCartItem = createAsyncThunk(
         "https://furniture-server-two.vercel.app/api/cart/get-cart",
         { withCredentials: true }
       );
-      console.log(response.data.cartArr);
       return response.data.cartArr;
     } catch (error) {
       if (isAxiosError(error)) {

@@ -18,9 +18,15 @@
 .input {
   padding-left: 20px;
 }
-.payment-section{
+.payment-section {
   margin-top: 40px;
 }
-.auth-section{
+.auth-section {
   margin-top: 15rem;
+}
+.operator-btn {
+  padding: 0rem 1rem;
+}
+.operator-box {
+  margin-right: 10px;
 }

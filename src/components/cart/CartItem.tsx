@@ -2,15 +2,19 @@ import React from "react";
 import { Button } from "../ui/button";
 import { ProductDataType } from "../store/slice/ProductSlice";
 
+export interface CartProductType extends ProductDataType {
+  quantity: number;
+}
+
 interface CartItemProps {
-  cartProduct: ProductDataType[];
+  cartProduct: CartProductType[];
 }
 
 const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
   return (
     <section className="cart-item-section flex justify-center items-start flex-col gap-5 lg:w-1/2 w-full h-full transition-all duration-200">
       {cartProduct && cartProduct.length > 0
-        ? cartProduct.map((item: ProductDataType) => (
+        ? cartProduct.map((item: CartProductType) => (
             <div
               key={item._id}
               className="flex gap-5 w-full max-sm:flex-wrap transition-all duration-200"
@@ -40,23 +44,29 @@ const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
                   <p>Material: {item.material}</p>
                 </div>
                 <div className="flex justify-between items-center w-full transition-all duration-200">
-                  <div className="flex gap-2">
-                    <p
-                      className={`${
-                        item.discountPrice
-                          ? "line-through decoration-red-500 decoration-2"
-                          : ""
-                      } font-semibold text-xl transition-all duration-200`}
-                    >
-                      {item.price}
-                    </p>
-                    <p className="font-semibold text-xl transition-all duration-200">
-                      {item.discountPrice}
-                    </p>
-                    <div>
-                      <button></button>
-                      <span>{}</span>
-                      <button></button>
+                  <div className="flex gap-2 justify-between w-full items-center">
+                    <div className="w-full flex gap-2">
+                      <p
+                        className={`${
+                          item.discountPrice
+                            ? "line-through decoration-red-500 decoration-2"
+                            : ""
+                        } font-semibold text-xl transition-all duration-200`}
+                      >
+                        {item.price}
+                      </p>
+                      <p className="font-semibold text-xl transition-all duration-200">
+                        {item.discountPrice}
+                      </p>
+                    </div>
+                    <div className="flex items-center gap-5 border operator-box">
+                      <button className="border-r operator-btn text-sm">
+                        -
+                      </button>
+                      <span>{item.quantity}</span>
+                      <button className="border-l operator-btn text-sm">
+                        +
+                      </button>
                     </div>
                   </div>
                   <Button className="bg-transparent text-black text-lg border-none shadow-none transition-all duration-200 hover:bg-transparent cursor-pointer">

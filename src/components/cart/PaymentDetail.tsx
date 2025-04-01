@@ -2,9 +2,10 @@ import React from "react";
 import { ProductDataType } from "../store/slice/ProductSlice";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { CartProductType } from "./CartItem";
 
 interface PaymentDetailProps {
-  cartProduct: ProductDataType[];
+  cartProduct: CartProductType[];
 }
 
 const PaymentDetail: React.FC<PaymentDetailProps> = ({ cartProduct }) => {
@@ -13,13 +14,19 @@ const PaymentDetail: React.FC<PaymentDetailProps> = ({ cartProduct }) => {
 
   const price = cartProduct.reduce((total, item) => {
     if (item.discountPercent) {
-      return total + item.discountPrice;
+      return total + item.discountPrice * item.quantity;
     } else {
-      return total + item.price;
+      return total + item.price * item.quantity;
     }
   }, 0);
 
-  let total = price + delivery + promoCode;
+  let total = cartProduct.reduce((total, item) => {
+    if (item.discountPercent) {
+      return total + item.discountPrice * item.quantity + delivery + promoCode;
+    } else {
+      return total + item.price * item.quantity + delivery + promoCode;
+    }
+  }, 0);
 
   return (
     <section className="payment-section lg:w-2/5 w-full flex items-start">
@@ -28,7 +35,7 @@ const PaymentDetail: React.FC<PaymentDetailProps> = ({ cartProduct }) => {
           <div className="w-full flex flex-col gap-2">
             <div className="text-md flex justify-between items-center font-medium">
               <span>Summary:</span>
-              <span>{price} $</span>
+              <span>{price.toFixed(2)} $</span>
             </div>
             <div className="text-md flex justify-between items-center font-medium">
               <span>Delivery:</span>
@@ -40,7 +47,7 @@ const PaymentDetail: React.FC<PaymentDetailProps> = ({ cartProduct }) => {
             </div>
             <div className="text-[#080B13] text-xl font-semibold flex justify-between items-center total">
               <span>Total:</span>
-              <span>{total} $</span>
+              <span>{total.toFixed(2)} $</span>
             </div>
           </div>
         )}

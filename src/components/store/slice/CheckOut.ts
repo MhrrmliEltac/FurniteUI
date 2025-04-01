@@ -3,10 +3,11 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import axios, { isAxiosError } from "axios";
 import { ProductDataType } from "./ProductSlice";
+import { CartProductType } from "@/components/cart/CartItem";
 
 const initialState: {
   loading: boolean;
-  cart: ProductDataType[];
+  cart: CartProductType[];
   error: string | null;
 } = {
   loading: true,
@@ -22,6 +23,7 @@ export const getCartItem = createAsyncThunk(
         "https://furniture-server-two.vercel.app/api/cart/get-cart",
         { withCredentials: true }
       );
+      console.log(response.data.cartArr);
       return response.data.cartArr;
     } catch (error) {
       if (isAxiosError(error)) {

@@ -1,5 +1,4 @@
 import React from "react";
-import { ProductDataType } from "../store/slice/ProductSlice";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
 import { CartProductType } from "./CartItem";

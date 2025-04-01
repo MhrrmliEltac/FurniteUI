@@ -2,7 +2,6 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import axios, { isAxiosError } from "axios";
-import { ProductDataType } from "./ProductSlice";
 import { CartProductType } from "@/components/cart/CartItem";
 
 const initialState: {
@@ -46,7 +45,7 @@ export const cartSlice = createSlice({
     });
     builder.addCase(
       getCartItem.fulfilled,
-      (state, action: PayloadAction<ProductDataType[]>) => {
+      (state, action: PayloadAction<CartProductType[]>) => {
         state.cart = action.payload;
         state.loading = false;
       }

@@ -19,16 +19,10 @@ const PaymentDetail: React.FC<PaymentDetailProps> = ({ cartProduct }) => {
     }
   }, 0);
 
-  let total = cartProduct.reduce((total, item) => {
-    if (item.discountPercent) {
-      return total + item.discountPrice * item.quantity + delivery + promoCode;
-    } else {
-      return total + item.price * item.quantity + delivery + promoCode;
-    }
-  }, 0);
+  let total = price + delivery + promoCode;
 
   return (
-    <section className="payment-section lg:w-2/5 w-full flex items-start">
+    <section className="payment-section lg:w-2/5 w-full flex items-start sticky top-0">
       <div className="flex flex-col w-full">
         {cartProduct && cartProduct.length > 0 && (
           <div className="w-full flex flex-col gap-2">

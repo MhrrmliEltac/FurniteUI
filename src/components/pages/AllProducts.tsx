@@ -60,16 +60,16 @@ const AllProducts = () => {
   }, [categoryName]);
 
   return (
-    <section className="products-section flex-col max-w-[1560px]">
-      <div className="category-name lg:w-[100%] w-[80%]">
+    <section className="products-section flex-col max-w-[1560px] h-full">
+      <div className="category-name xl:w-[100%] w-[90%]">
         <p>Home / Category / {categoryName}</p>
       </div>
       {isLoading ? (
-        <div className="flex items-center justify-center w-full flex-1">
+        <div className="flex items-center justify-center w-full  h-[50vh]">
           <Loader />
         </div>
       ) : (
-        <div className="grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 lg:w-[100%] w-[80%] gap-5">
+        <div className="grid xl:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 xl:w-[100%] w-[80%] gap-5">
           {categoryProduct && categoryProduct.length > 0 ? (
             categoryProduct?.map((item: ProductDataType, index: number) => (
               <motion.div

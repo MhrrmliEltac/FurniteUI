@@ -1,0 +1,26 @@
+.cart-section {
+  margin: 10rem 0rem;
+}
+.loader-section {
+  margin: 10rem 0rem;
+  height: 50vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.total {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+.btn {
+  padding: 0px 50px;
+}
+.input {
+  padding-left: 20px;
+}
+.payment-section{
+  margin-top: 40px;
+}
+.auth-section{
+  margin-top: 15rem;
+}

@@ -16,11 +16,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import "../../assets/styles/navbar.css";
 import axios, { isAxiosError } from "axios";
 import { ProductDataType } from "../store/slice/ProductSlice";
 import { Button } from "@mui/material";
 import { debounce } from "lodash";
+import "../../assets/styles/navbar.css";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);
@@ -91,6 +91,7 @@ const Navbar = () => {
     if (tab.innerText === "Search") {
       console.log("isledi");
     } else if (tab.innerText === "Basket") {
+      navigate("/check-out");
     } else if (tab.innerText === "Favourite") {
       navigate("/wishlist");
     }
@@ -230,6 +231,7 @@ const Navbar = () => {
                 style={{
                   color: scroll === 0 && path === "/" ? "#DAF1F3" : "#284551",
                 }}
+                onClick={() => navigate("/check-out")}
               />
             </li>
             <li>

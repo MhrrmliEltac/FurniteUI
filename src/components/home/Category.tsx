@@ -1,18 +1,22 @@
-import { useState } from "react";
-import "../../assets/styles/category.css";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import { animation } from "../../utils/Animations";
-import { createSearchParams, useLocation, useNavigate } from "react-router-dom";
+import {
+  createSearchParams,
+  useLocation,
+  useNavigate,
+  useSearchParams,
+} from "react-router-dom";
+import "../../assets/styles/category.css";
 
 const Category = () => {
-  const [activeTab, setActiveTab] = useState<string>("");
   const location = useLocation();
   const navigate = useNavigate();
+  const [searchParams, _] = useSearchParams();
+  const categoryName = searchParams.get("category");
   const path = location.pathname;
 
   const handleActiveTab = (tab: string) => {
-    setActiveTab(tab);
     navigate({
       pathname: "/products",
       search: `${createSearchParams({
@@ -34,7 +38,7 @@ const Category = () => {
         <ul className="category-list">
           {["Chair", "Table", "Sofa", "Dining", "Bed", "Interior"].map(
             (tab, index) => (
-              <li key={index} className={`${activeTab === tab && "active"}`}>
+              <li key={index} className={`${categoryName === tab && "active"}`}>
                 <a
                   onClick={() => handleActiveTab(tab)}
                   className={`category-link`}

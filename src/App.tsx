@@ -12,6 +12,7 @@ import Profile from "./components/pages/Profile";
 import UseCheckAuth from "./utils/UseCheckAuth";
 import { ProtectedLayout } from "./components/Layouts/ProtectedLayout";
 import AllProducts from "./components/pages/AllProducts";
+import Cart from "./components/pages/Cart";
 
 const HomePage = lazy(() => import("./components/pages/Home"));
 const Navbar = lazy(() => import("./components/header/Navbar"));
@@ -30,6 +31,8 @@ const App = () => {
           <Route path="/" element={<HomePage />} />{" "}
           {/* Favorilər səhifəsi üçün route */}
           <Route path="/wishlist" element={<Wishlist />} />{" "}
+          {/* CheckOut səhifəsi üçün route */}
+          <Route path="/check-out" element={<Cart />} />{" "}
           {/* Məhsul özəllikləri səhifəsi üçün route */}
           <Route path="/product-detail" element={<ProductDetail />} />
           {/*Bütün məhsullar */}

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import axios, { isAxiosError } from "axios";
-import { CartProductType } from "@/components/cart/CartItem";
+import { CartProductType } from "@/types/Type";
 
 const initialState: {
   loading: boolean;

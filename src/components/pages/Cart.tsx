@@ -19,7 +19,7 @@ const Cart: React.FC = () => {
     }
   }, [dispatch, isAuth]);
 
-  if (!!isAuth) {
+  if (!isAuth) {
     return (
       <section className="auth-section">
         <DontAuth />

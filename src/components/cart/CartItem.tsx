@@ -11,14 +11,14 @@ const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
               key={item._id}
               className="flex gap-5 w-full max-sm:flex-wrap transition-all duration-200"
             >
-              <div className="w-[300px] h-full transition-all duration-200">
+              <div className="md:w-[300px] w-full h-full transition-all duration-200">
                 <img
                   src={item.images[0]}
                   alt={item.name}
-                  className="w-full h-[200px] transition-all duration-200"
+                  className="w-full h-full aspect-square transition-all duration-200"
                 />
               </div>
-              <div className="flex items-start justify-center flex-col w-full gap-5 transition-all duration-200">
+              <div className="md:w-[300px] w-full flex items-start justify-center flex-col gap-5 transition-all duration-200">
                 <header className="flex  flex-col gap-1 transition-all duration-200">
                   <h2 className="text-xl font-semibold transition-all duration-200">
                     {item.name}
@@ -30,13 +30,13 @@ const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
                     Structure color: {item.structureColor || "null"}
                   </span>
                 </header>
-                <div className="flex justify-start gap-5 w-full transition-all duration-200">
+                <div className="flex flex-wrap justify-start gap-5 w-full transition-all duration-200">
                   <p>Size: {item.size}</p>
                   <p>Stock: {item.stock}</p>
                   <p>Material: {item.material}</p>
                 </div>
                 <div className="flex justify-between items-center w-full transition-all duration-200">
-                  <div className="flex gap-2 justify-between w-full items-center">
+                  <div className="flex max-sm:flex-wrap gap-2 justify-between w-full items-center">
                     <div className="w-full flex gap-2">
                       <p
                         className={`${

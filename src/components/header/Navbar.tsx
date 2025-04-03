@@ -17,10 +17,10 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import axios, { isAxiosError } from "axios";
-import { ProductDataType } from "../store/slice/ProductSlice";
 import { Button } from "@mui/material";
 import { debounce } from "lodash";
 import "../../assets/styles/navbar.css";
+import { ProductDataType } from "@/types/Type";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);

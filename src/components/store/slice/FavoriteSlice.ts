@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import axios, { AxiosError } from "axios";
-import { ProductDataType } from "./ProductSlice";
+import { ProductDataType } from "@/types/Type";
 
 const initialState: {
   loading: boolean;
@@ -101,7 +101,7 @@ export const favoriteSlice = createSlice({
     });
     builder.addCase(deleteFavorite.fulfilled, (state, action) => {
       state.favorite = state.favorite.filter(
-        (item) => item._id !== action.meta.arg
+        (item: any) => item._id !== action.meta.arg
       );
       state.loading = false;
     });

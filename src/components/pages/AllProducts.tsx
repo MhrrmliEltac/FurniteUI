@@ -1,12 +1,12 @@
 import axios, { isAxiosError } from "axios";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
-import { ProductDataType } from "../store/slice/ProductSlice";
 import { toast } from "sonner";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import Loader from "../general/RoundedLoader";
 import "../../assets/styles/allproduct.css";
+import { ProductDataType } from "@/types/Type";
 
 const AllProducts = () => {
   const [searchParams, _] = useSearchParams();

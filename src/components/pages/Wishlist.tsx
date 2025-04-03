@@ -31,7 +31,7 @@ const Wishlist = () => {
   }, []);
 
   return (
-    <section className="wishlist-section" style={{ marginTop: "200px" }}>
+    <section className="wishlist-section">
       {!isAuth ? (
         <DontAuth />
       ) : (

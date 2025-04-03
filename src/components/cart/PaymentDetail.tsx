@@ -1,7 +1,7 @@
 import React from "react";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
-import { CartProductType } from "./CartItem";
+import { CartProductType } from "@/types/Type";
 
 interface PaymentDetailProps {
   cartProduct: CartProductType[];
@@ -22,8 +22,8 @@ const PaymentDetail: React.FC<PaymentDetailProps> = ({ cartProduct }) => {
   let total = price + delivery + promoCode;
 
   return (
-    <section className="payment-section lg:w-2/5 w-full flex items-start sticky top-0">
-      <div className="flex flex-col w-full">
+    <section className="payment-section lg:w-2/5 w-full flex items-start relative">
+      <div className="flex flex-col w-full sticky top-10 h-[100vh] overflow-y-auto">
         {cartProduct && cartProduct.length > 0 && (
           <div className="w-full flex flex-col gap-2">
             <div className="text-md flex justify-between items-center font-medium">

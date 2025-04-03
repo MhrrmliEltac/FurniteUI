@@ -1,14 +1,6 @@
 import React from "react";
 import { Button } from "../ui/button";
-import { ProductDataType } from "../store/slice/ProductSlice";
-
-export interface CartProductType extends ProductDataType {
-  quantity: number;
-}
-
-interface CartItemProps {
-  cartProduct: CartProductType[];
-}
+import { CartItemProps, CartProductType } from "@/types/Type";
 
 const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
   return (

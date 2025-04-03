@@ -8,26 +8,7 @@ import { Scrollbar } from "swiper/modules";
 import { motion } from "framer-motion";
 import { animation } from "../../utils/Animations";
 import { Skeleton, Stack } from "@mui/material";
-
-interface ProductDataType {
-  _id: string;
-  name: string;
-  category: string;
-  subCategory: string;
-  brand: string;
-  price: number;
-  discountPrice: number;
-  discountPercent: number;
-  description: string;
-  stock: number;
-  colors: string[];
-  structureColor: string[];
-  material: string[];
-  size: string[];
-  images: string[];
-  isPopular: boolean;
-  isOnSale: boolean;
-}
+import { ProductDataType } from "@/types/Type";
 
 const IsSaleSwiper = memo(
   ({ productData }: { productData: ProductDataType[] | null }) => {

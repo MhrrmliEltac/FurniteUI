@@ -6,36 +6,10 @@ import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { getFavorite } from "../store/slice/FavoriteSlice";
 import "../../assets/styles/wishlist.css";
-interface item {
-  _id: string;
-  itemId: string;
-  name: string;
-  category: string;
-  subCategory: string;
-  brand: string;
-  price: number;
-  discountPrice: number;
-  discountPercent: number;
-  description: string;
-  stock: number;
-  colors: string[];
-  structureColor: string[];
-  material: string[];
-  size: string[];
-  images: string[];
-  isPopular: boolean;
-  isOnSale: boolean;
-}
-
-interface ViewedProductDataType {
-  _id: string;
-  itemId: item;
-  userId: string;
-  viewedAt: string;
-}
+import { ProductUserDataType } from "@/types/Type";
 
 const Wishlist = () => {
-  const [viewed, setViewed] = useState<ViewedProductDataType[] | null>(null);
+  const [viewed, setViewed] = useState<ProductUserDataType[] | null>(null);
   const dispatch = useAppDispatch();
   const isAuth = sessionStorage.getItem("auth");
   const favoriteState = useAppSelector(

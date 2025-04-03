@@ -2,33 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
 import axios, { AxiosError } from "axios";
-
-type Dimensions = {
-  width: string;
-  height: string;
-};
-
-export interface ProductDataType {
-  _id: string;
-  name: string;
-  category: string;
-  subCategory: string;
-  brand: string;
-  price: number;
-  discountPrice: number;
-  discountPercent: number;
-  description: string;
-  stock: number;
-  colors: string[];
-  structureColor: string[];
-  material: string[];
-  size: string[];
-  images: string[];
-  isPopular: boolean;
-  isOnSale: boolean;
-  dimensions: Dimensions;
-  style: string[];
-}
+import { ProductDataType } from "@/types/Type";
 
 const initialState: {
   loading: boolean;

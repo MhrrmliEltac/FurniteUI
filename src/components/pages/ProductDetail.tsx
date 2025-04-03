@@ -7,43 +7,19 @@ import { useSearchParams } from "react-router-dom";
 import ProductDetailFooter from "../productDetail/ProductDetailFooter";
 import InformationPanel from "../productDetail/InformationPanel";
 import PaymentPartner from "../productDetail/PaymentPartner";
-import RecentlyViewed, { ProductDataType } from "../general/RecentlyViewed";
+import RecentlyViewed from "../general/RecentlyViewed";
 import Subscription from "../home/Subscription";
 import { Skeleton } from "@mui/material";
 import { toast } from "sonner";
 import axios, { isAxiosError } from "axios";
+import { Dimensions, ProductDataType, ProductUserDataType } from "@/types/Type";
 import "../../assets/styles/productdetail.css";
 
-type Dimensions = {
-  width: string;
-  height: string;
-};
-
-interface ProductById {
-  _id: string;
-  name: string;
-  category: string;
-  subCategory: string;
-  brand: string;
-  price: number;
-  discountPrice: number;
-  discountPercent: number;
-  description: string;
-  stock: number;
-  colors: string[];
-  structureColor: string[];
-  material: string[];
-  size: string[];
-  images: string[];
-  isPopular: boolean;
-  isOnSale: boolean;
-  dimensions: Dimensions;
-  style: string[];
-}
-
 const ProductDetail = () => {
-  const [productById, setProductById] = useState<ProductById | null>(null);
-  const [viewedProduct, setViewed] = useState<ProductDataType[] | null>(null);
+  const [productById, setProductById] = useState<ProductDataType | null>(null);
+  const [viewedProduct, setViewed] = useState<ProductUserDataType[] | null>(
+    null
+  );
   const [quantity, setQuantity] = useState(1);
   const [searchParams, _] = useSearchParams();
   const image: string | undefined = productById?.images[0];

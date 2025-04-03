@@ -19,7 +19,7 @@ const Cart: React.FC = () => {
     }
   }, [dispatch, isAuth]);
 
-  if (!isAuth) {
+  if (!!isAuth) {
     return (
       <section className="auth-section">
         <DontAuth />
@@ -36,11 +36,15 @@ const Cart: React.FC = () => {
   }
 
   if (cartProduct.length === 0) {
-    return <section className="cart-section max-w-[1560px] flex justify-start items-center xl:w-full w-[90%]">Empty Cart</section>;
+    return (
+      <section className="cart-section max-w-[1560px] flex justify-start items-center xl:w-full w-[90%]">
+        Empty Cart
+      </section>
+    );
   }
 
   return (
-    <section className="cart-section flex justify-center items-center">
+    <section className="cart-section flex justify-center items-center relative">
       <section className="flex justify-between w-[80%] flex-wrap relative">
         <CartItem cartProduct={cartProduct} />
         <PaymentDetail cartProduct={cartProduct} />

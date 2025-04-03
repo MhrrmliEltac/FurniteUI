@@ -8,32 +8,10 @@ import { deleteFavorite } from "../store/slice/FavoriteSlice";
 import Skeleton from "@mui/material/Skeleton";
 import Stack from "@mui/material/Stack";
 import axios, { isAxiosError } from "axios";
+import { ProductDataType, showProps } from "@/types/Type";
 import "swiper/css";
 import "swiper/css/scrollbar";
 import "../../assets/styles/swiper.css";
-interface ProductDataType {
-  _id: string;
-  name: string;
-  category: string;
-  subCategory: string;
-  brand: string;
-  price: number;
-  discountPrice: number;
-  discountPercent: number;
-  description: string;
-  stock: number;
-  colors: string[];
-  structureColor: string[];
-  material: string[];
-  size: string[];
-  images: string[];
-  isPopular: boolean;
-  isOnSale: boolean;
-}
-
-interface ShowProps {
-  isVisible?: boolean;
-}
 
 const ProductSlider = ({
   productData,
@@ -42,7 +20,7 @@ const ProductSlider = ({
   isLoading,
 }: {
   productData: ProductDataType[] | null;
-  show: ShowProps;
+  show: showProps;
   isFavorite?: boolean;
   isLoading?: boolean;
 }) => {

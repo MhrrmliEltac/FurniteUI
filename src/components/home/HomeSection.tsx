@@ -5,26 +5,7 @@ import ProductSlider from "../general/Swiper";
 import IsSaleSwiper from "./IsSaleSwiper";
 import Heading from "../general/Heading";
 import { useAppSelector } from "@/hooks/hooks";
-
-interface ProductDataType {
-  _id: string;
-  name: string;
-  category: string;
-  subCategory: string;
-  brand: string;
-  price: number;
-  discountPrice: number;
-  discountPercent: number;
-  description: string;
-  stock: number;
-  colors: string[];
-  structureColor: string[];
-  material: string[];
-  size: string[];
-  images: string[];
-  isPopular: boolean;
-  isOnSale: boolean;
-}
+import { ProductDataType } from "@/types/Type";
 
 const HomeSection = () => {
   const [productData, setProductData] = useState<ProductDataType[] | null>(

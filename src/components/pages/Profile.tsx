@@ -111,9 +111,10 @@ const Profile: React.FC = () => {
                       Name
                     </FormLabel>
                     <Input
-                      placeholder="Enter your name"
+                      placeholder={user.userName}
                       className="placeholder:text-xl w-full bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] h-[45px] input transition-all duration-200"
                       type="text"
+                      disabled
                     />
                   </FormControl>
                   <FormControl>
@@ -121,7 +122,8 @@ const Profile: React.FC = () => {
                       Email
                     </FormLabel>
                     <Input
-                      placeholder="Enter your email"
+                      placeholder={user.email}
+                      disabled
                       className="placeholder:text-xl w-full bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] h-[45px] input transition-all duration-200"
                       type="email"
                     />
@@ -139,11 +141,13 @@ const Profile: React.FC = () => {
                       <Input
                         placeholder={countryCode}
                         className="w-[20%] placeholder:text-xl bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] col-span-2 h-[45px] justify-center items-center flex country-code input transition-all duration-200"
+                        disabled
                       />
                       <Input
                         placeholder={nationalNumber}
                         className="placeholder:text-xl w-full bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] col-span-2 h-[45px] input transition-all duration-200"
                         type="tel"
+                        disabled
                       />
                     </div>
                   </FormControl>

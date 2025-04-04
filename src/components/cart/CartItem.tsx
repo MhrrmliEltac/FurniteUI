@@ -1,8 +1,27 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { CartItemProps, CartProductType } from "@/types/Type";
+import { isAxiosError } from "axios";
+import { toast } from "sonner";
+import { useAppDispatch } from "@/hooks/hooks";
+import { deleteCartItem, getCartItem } from "../store/slice/CheckOut";
 
 const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
+  const dispatch = useAppDispatch();
+
+  const deleteCartById = (id: string) => {
+    try {
+      dispatch(deleteCartItem(id));
+      setTimeout(() => {
+        dispatch(getCartItem());
+      }, 200);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    }
+  };
+
   return (
     <section className="cart-item-section flex justify-center items-start flex-col gap-5 lg:w-1/2 w-full h-full transition-all duration-200">
       {cartProduct && cartProduct.length > 0
@@ -39,15 +58,20 @@ const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
                   <div className="flex max-sm:flex-wrap gap-2 justify-between w-full items-center">
                     <div className="w-full flex gap-2">
                       <p
+                        style={{
+                          color: item.discountPrice
+                            ? "rgb(189, 105, 105)"
+                            : undefined,
+                        }}
                         className={`${
                           item.discountPrice
-                            ? "line-through decoration-red-500 decoration-2"
-                            : ""
+                            ? "line-through decoration-2"
+                            : "text-[#3692a4]"
                         } font-semibold text-xl transition-all duration-200`}
                       >
                         {item.price}
                       </p>
-                      <p className="font-semibold text-xl transition-all duration-200">
+                      <p className="font-semibold text-xl transition-all duration-200 text-[#3692a4]">
                         {item.discountPrice}
                       </p>
                     </div>
@@ -61,7 +85,10 @@ const CartItem: React.FC<CartItemProps> = ({ cartProduct }) => {
                       </button>
                     </div>
                   </div>
-                  <Button className="bg-transparent text-black text-lg border-none shadow-none transition-all duration-200 hover:bg-transparent cursor-pointer">
+                  <Button
+                    onClick={() => deleteCartById(item._id)}
+                    className="bg-transparent text-black text-lg border-none shadow-none transition-all duration-200 hover:bg-transparent cursor-pointer"
+                  >
                     Delete
                   </Button>
                 </div>

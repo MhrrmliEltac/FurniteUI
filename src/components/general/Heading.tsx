@@ -2,13 +2,17 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import "../../assets/styles/general.css";
 import { animation } from "../../utils/Animations";
+import { useNavigate } from "react-router-dom";
 
 interface HeadingProps {
   title: string;
   btnTitle?: string;
+  path: "sale" | "category";
 }
 
-const Heading: React.FC<HeadingProps> = ({ title, btnTitle }) => {
+const Heading: React.FC<HeadingProps> = ({ title, btnTitle, path}) => {
+  const navigate = useNavigate();
+
   return (
     <motion.section
       variants={animation}
@@ -19,8 +23,8 @@ const Heading: React.FC<HeadingProps> = ({ title, btnTitle }) => {
     >
       <div className="heading-section-box">
         <h3>{title}</h3>
-        <button>
-          {btnTitle}{" "}
+        <button onClick={path === "sale" ? ()=>navigate("/products/sale") : ()=>navigate("/products?category=Chair")}>
+          {btnTitle}
           <Icon
             icon="material-symbols:chevron-right"
             width="24"

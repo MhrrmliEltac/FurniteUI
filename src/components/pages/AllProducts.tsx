@@ -1,6 +1,6 @@
 import axios, { isAxiosError } from "axios";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useLocation, useSearchParams } from "react-router-dom";
 import { toast } from "sonner";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
@@ -16,14 +16,26 @@ const AllProducts = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const categoryName: string | null = searchParams.get("category");
   const isAuth = sessionStorage.getItem("auth");
+  const location = useLocation();
 
   const getProductByCategory = async () => {
     setIsLoading(!isLoading);
     try {
-      const response = await axios.get(
-        `https://furniture-server-two.vercel.app/api/products/category?category=${categoryName}`
-      );
-      setCategoryProduct(response.data);
+      if (location.pathname === `/products`) {
+        const response = await axios.get(
+          `https://furniture-server-two.vercel.app/api/products/category?category=${categoryName}`
+        );
+        setCategoryProduct(response.data);
+      }
+      if (location.pathname === "/products/sale") {
+        const response = await axios.get(
+          `https://furniture-server-two.vercel.app/api/products`
+        );
+        const filteredData = response.data.filter(
+          (item: ProductDataType) => item.isOnSale === true
+        );
+        setCategoryProduct(filteredData);
+      }
       setIsLoading(isLoading);
     } catch (error: unknown) {
       if (isAxiosError(error)) {
@@ -61,9 +73,11 @@ const AllProducts = () => {
 
   return (
     <section className="products-section flex-col max-w-[1560px] h-full">
-      <div className="category-name xl:w-[100%] w-[90%]">
-        <p>Home / Category / {categoryName}</p>
-      </div>
+      {location.pathname !== "/products/sale" && (
+        <div className="category-name xl:w-[100%] w-[90%]">
+          <p>Home / Products / Category / {categoryName}</p>
+        </div>
+      )}
       {isLoading ? (
         <div className="flex items-center justify-center w-full  h-[50vh]">
           <Loader />
@@ -110,9 +124,23 @@ const AllProducts = () => {
                       className={`w-5 h-5 rounded-full border-2 border-[#284155]`}
                     ></motion.span>
                   ))}
-                  <span className="text-xl text-[#284551] font-semibold">
-                    {item.price}
-                  </span>
+                  <div className="flex gap-2 items-center">
+                    <span
+                      style={{
+                        color: item.discountPrice
+                          ? "rgb(189, 105, 105)"
+                          : "#3692a4",
+                      }}
+                      className={`text-xl ${
+                        item.discountPrice && "line-through"
+                      } font-semibold`}
+                    >
+                      {item.price}
+                    </span>
+                    <span className="text-xl text-[#3692a4] font-semibold">
+                      {item.discountPrice}
+                    </span>
+                  </div>
                 </div>
               </motion.div>
             ))

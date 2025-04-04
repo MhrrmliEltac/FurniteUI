@@ -37,6 +37,8 @@ const App = () => {
           <Route path="/product-detail" element={<ProductDetail />} />
           {/*Bütün məhsullar */}
           <Route path="/products" element={<AllProducts />} />
+          {/*Endirimli məhsullar */}
+          <Route path="/products/sale" element={<AllProducts />} />
           {/* Məhsul özəllikləri səhifəsi üçün route */}
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />

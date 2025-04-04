@@ -49,13 +49,13 @@ const HomeSection = () => {
 
   return (
     <motion.section className="home-section">
-      <Heading title="Popular Chairs" btnTitle="View All" />
+      <Heading title="Popular Chairs" btnTitle="View All" path="category" />
       <ProductSlider
         isLoading={isLoading}
         productData={productData}
         show={{ isVisible: false }}
       />
-      <Heading title="Products on Sale" btnTitle="View All" />
+      <Heading title="Products on Sale" btnTitle="View All" path="sale" />
       <IsSaleSwiper productData={isSaleProduct} />
     </motion.section>
   );

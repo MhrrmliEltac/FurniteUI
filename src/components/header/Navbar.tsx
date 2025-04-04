@@ -45,7 +45,7 @@ const Navbar = () => {
   const getSearchData = async (name: string) => {
     try {
       const res = await axios.get(
-        `http://localhost:4000/api/search?query=${name}`
+        `https://furniture-server-two.vercel.app/api/search?query=${name}`
       );
       const product = await res.data.product;
       setResult(product);
@@ -150,7 +150,7 @@ const Navbar = () => {
             >
               <input
                 className={`w-full ${
-                  location.pathname === "/"
+                  location.pathname === "/" && scroll === 0
                     ? "placeholder:text-white"
                     : "placeholder:text-[#284551]"
                 } border-b-2 outline-none ${

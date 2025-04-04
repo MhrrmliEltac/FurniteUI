@@ -58,9 +58,11 @@
           display: flex;
           justify-content: space-between;
           align-items: center;
+          font-weight: 600;
           .product-price {
             color: #3692a4;
             font-size: 20px;
+            font-weight: 600;
           }
           .icon-box {
             border-radius: 50%;
@@ -77,6 +79,7 @@
         .product-price {
           color: #3692a4;
           font-size: 20px;
+          font-weight: 600;
         }
       }
     }

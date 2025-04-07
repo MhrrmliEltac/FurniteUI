@@ -54,6 +54,9 @@ const Login: React.FC = () => {
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
+        setLoading(false);
+        setDisabled(false);
+        setFormData({ email: "", password: "" });
       }
       setLoading(false);
       setDisabled(false);

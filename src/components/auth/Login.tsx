@@ -21,6 +21,7 @@ const Login: React.FC = () => {
   );
   const [disabled, setDisabled] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
@@ -47,23 +48,25 @@ const Login: React.FC = () => {
         dispatch(getProfileToken());
         setLoading(false);
       }
-      const emptyForm = {
-        password: "",
-        email: "",
-      };
-      setFormData(emptyForm);
 
       toast.success(response.data.message);
       navigate("/");
-    } catch (error: unknown) {
+    } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
       }
+      setLoading(false);
+      setDisabled(false);
+      setFormData({ email: "", password: "" });
     }
   };
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleShowPassword = () => {
+    setShowPassword((prev) => !prev);
   };
 
   return (
@@ -159,7 +162,7 @@ const Login: React.FC = () => {
                         style={{ color: "#B0BFC9" }}
                       />
                       <input
-                        type="password"
+                        type={showPassword ? "text" : "password"}
                         name="password"
                         id="password"
                         placeholder="Enter here"
@@ -173,6 +176,7 @@ const Login: React.FC = () => {
                         width="28"
                         height="28"
                         style={{ color: "#B0BFC9" }}
+                        onClick={handleShowPassword}
                       />
                     </Box>
                   </FormControl>

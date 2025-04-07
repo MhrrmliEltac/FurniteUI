@@ -35,7 +35,6 @@ const Profile: React.FC = () => {
     confirmNewPassword: "",
   });
   const dispatch = useAppDispatch();
-  const error = useAppSelector((state) => state.userReducer.error);
 
   const handlePhoneChange = (value: string | undefined) => {
     setPhoneNumber(value);
@@ -77,16 +76,26 @@ const Profile: React.FC = () => {
         toast.error("New password and confirm new password do not match");
         return;
       }
+
+      let isPassValid = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,32}$/;
+      if (!isPassValid.test(password.newPassword)) {
+        toast.error(
+          "New password must contain at least one number and one uppercase and lowercase letter, and at least 8 or more characters"
+        );
+        return;
+      }
+
+      if (password.password.length < 8) {
+        toast.error("Password min 8 characters");
+        return;
+      }
+
       dispatch(
         changePassword({
           currentPassword: password.password,
           newPassword: password.newPassword,
         })
       );
-      if (error !== null) {
-        toast.error(error);
-        return;
-      }
     },
     [password]
   );
@@ -132,9 +141,9 @@ const Profile: React.FC = () => {
                       {user.userName}
                     </span>
                   </li>
-                  <li className="flex justify-between transition-all duration-200">
+                  <li className="flex justify-between transition-all duration-200 flex-wrap">
                     Email:{" "}
-                    <span className="w-1/2 font-medium transition-all duration-200">
+                    <span className="w-full font-medium transition-all duration-200">
                       {user.email}
                     </span>
                   </li>

@@ -74,7 +74,6 @@ export const changePassword = createAsyncThunk(
           withCredentials: true,
         }
       );
-      console.log(response.data);
       return response.data;
     } catch (error) {
       if (isAxiosError(error)) {
@@ -142,7 +141,6 @@ export const userSlice = createSlice({
     });
     builder.addCase(changePassword.fulfilled, (state, action) => {
       state.loading = false;
-      console.log(action.payload);
       state.message = action.payload.message;
     });
     builder.addCase(changePassword.rejected, (state) => {

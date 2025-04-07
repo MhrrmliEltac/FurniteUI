@@ -78,6 +78,7 @@ const Register: React.FC = () => {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
       }
+      setShowLoader(!showLoader);
     }
   };
 

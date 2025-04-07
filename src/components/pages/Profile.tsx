@@ -1,5 +1,11 @@
-import React, { FormEvent, useEffect, useState } from "react";
-import { useAppSelector } from "@/hooks/hooks";
+import React, {
+  ChangeEvent,
+  FormEvent,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
+import { useAppDispatch, useAppSelector } from "@/hooks/hooks";
 import { Icon } from "@iconify/react";
 import { getCountryCallingCode, parsePhoneNumber } from "libphonenumber-js/max";
 import { Input } from "../ui/input";
@@ -8,6 +14,8 @@ import { Button } from "../ui/button";
 import { Link } from "react-router-dom";
 import Loader from "../general/RoundedLoader";
 import "../../assets/styles/profile.css";
+import { toast } from "sonner";
+import { changePassword } from "../store/slice/UserSlice";
 
 const Profile: React.FC = () => {
   const loading = useAppSelector((state) => state.userReducer.loading);
@@ -15,6 +23,19 @@ const Profile: React.FC = () => {
   const [_, setPhoneNumber] = useState<string | undefined>("");
   const [countryCode, setCountryCode] = useState<string>("");
   const [nationalNumber, setNationalNumber] = useState<string>("");
+  const [password, setPassword] = useState<{
+    password: string;
+    confirmPassword: string;
+    newPassword: string;
+    confirmNewPassword: string;
+  }>({
+    password: "",
+    confirmPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+  });
+  const dispatch = useAppDispatch();
+  const error = useAppSelector((state) => state.userReducer.error);
 
   const handlePhoneChange = (value: string | undefined) => {
     setPhoneNumber(value);
@@ -34,9 +55,41 @@ const Profile: React.FC = () => {
     }
   };
 
-  const changeFormData = async (e: FormEvent) => {
-    e.preventDefault();
-  };
+  const changeFormData = useCallback(
+    async (e: ChangeEvent<HTMLInputElement>) => {
+      e.preventDefault();
+      setPassword((prev) => ({
+        ...prev,
+        [e.target.name]: e.target.value,
+      }));
+    },
+    [password]
+  );
+
+  const handleSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault();
+      if (password.password !== password.confirmPassword) {
+        toast.error("Password and confirm password do not match");
+        return;
+      }
+      if (password.newPassword !== password.confirmNewPassword) {
+        toast.error("New password and confirm new password do not match");
+        return;
+      }
+      dispatch(
+        changePassword({
+          currentPassword: password.password,
+          newPassword: password.newPassword,
+        })
+      );
+      if (error !== null) {
+        toast.error(error);
+        return;
+      }
+    },
+    [password]
+  );
 
   useEffect(() => {
     if (user.phoneNumber) {
@@ -155,7 +208,7 @@ const Profile: React.FC = () => {
                 <Button
                   className="btn cursor-pointer transition-all duration-200"
                   type="submit"
-                  onClick={changeFormData}
+                  onClick={handleSubmit}
                 >
                   Save Changes
                 </Button>
@@ -178,11 +231,17 @@ const Profile: React.FC = () => {
                         className="placeholder:text-xl w-full bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] h-[45px] input transition-all duration-200"
                         type="password"
                         id="change-pass"
+                        name="password"
+                        value={password.password}
+                        onChange={changeFormData}
                       />
                       <Input
                         placeholder="Confirm password..."
                         className="placeholder:text-xl w-full bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] h-[45px] input transition-all duration-200"
                         type="password"
+                        name="confirmPassword"
+                        value={password.confirmPassword}
+                        onChange={changeFormData}
                       />
                     </div>
                   </FormControl>
@@ -200,11 +259,17 @@ const Profile: React.FC = () => {
                         className="placeholder:text-xl w-full bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] h-[45px] input transition-all duration-200"
                         type="password"
                         id="confirm-pass"
+                        name="newPassword"
+                        value={password.newPassword}
+                        onChange={changeFormData}
                       />
                       <Input
                         placeholder="Confirm new password..."
                         className="placeholder:text-xl w-full bg-[#B7B7B7] opacity-30 placeholder:text-[#000000] h-[45px] input transition-all duration-200"
                         type="password"
+                        name="confirmNewPassword"
+                        value={password.confirmNewPassword}
+                        onChange={changeFormData}
                       />
                     </div>
                   </FormControl>
@@ -214,7 +279,7 @@ const Profile: React.FC = () => {
                   <Button
                     className="btn cursor-pointer transition-all duration-200"
                     type="submit"
-                    onClick={changeFormData}
+                    onClick={handleSubmit}
                   >
                     Save Changes
                   </Button>

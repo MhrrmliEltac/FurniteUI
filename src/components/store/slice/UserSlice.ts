@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import type { RootState } from "../store";
-import { AxiosError } from "axios";
+import { AxiosError, isAxiosError } from "axios";
 import { api } from "../../../utils/Api";
 
 type UserDataType = {
@@ -53,6 +53,33 @@ export const deleteProfileToken = createAsyncThunk(
       return rejectWithValue(
         error.response?.data?.message || "Failed to fetch product"
       );
+    }
+  }
+);
+
+export const changePassword = createAsyncThunk(
+  "/user/change-password",
+  async ({
+    currentPassword,
+    newPassword,
+  }: {
+    currentPassword: string;
+    newPassword: string;
+  }) => {
+    try {
+      const response = await api.post(
+        "/change-password",
+        { currentPassword, newPassword },
+        {
+          withCredentials: true,
+        }
+      );
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      if (isAxiosError(error)) {
+        return error.response?.data?.message || "Failed to fetch product";
+      }
     }
   }
 );
@@ -110,6 +137,18 @@ export const userSlice = createSlice({
             : "Something went wrong";
       }
     );
+    builder.addCase(changePassword.pending, (state) => {
+      state.loading = true;
+    });
+    builder.addCase(changePassword.fulfilled, (state, action) => {
+      state.loading = false;
+      console.log(action.payload);
+      state.message = action.payload.message;
+    });
+    builder.addCase(changePassword.rejected, (state) => {
+      state.loading = false;
+      state.error = state.message;
+    });
   },
 });
 

@@ -1,0 +1,12 @@
+.reset-pass-section {
+  margin: 0 auto;
+  .form-box {
+    padding: 5%;
+  }
+  .input {
+    padding-left: 40px;
+  }
+  .btn {
+    margin-top: 20px;
+  }
+}

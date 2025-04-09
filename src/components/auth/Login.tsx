@@ -7,10 +7,10 @@ import { isAxiosError } from "axios";
 import { toast } from "sonner";
 import { api } from "../../utils/Api";
 import AuthHeading from "./AuthHeading";
-import "../../assets/styles/login.css";
 import { useAppDispatch } from "../../hooks/hooks";
 import { authCheck, getProfileToken } from "../store/slice/UserSlice";
 import WaitLoader from "../general/WaitLoader";
+import "../../assets/styles/login.css";
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<{ email: string; password: string }>(
@@ -183,7 +183,7 @@ const Login: React.FC = () => {
                       />
                     </Box>
                   </FormControl>
-                  <span>Forgot password?</span>
+                  <Link to="/forgot-password">Forgot password?</Link>
                 </FormGroup>
                 <Button
                   type="submit"

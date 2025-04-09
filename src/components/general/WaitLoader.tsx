@@ -20,7 +20,7 @@ const WaitLoader: React.FC = () => {
 
 const StyledWrapper = styled.div`
   .dot-spinner {
-    --uib-size: 2.8rem;
+    --uib-size: 2.2rem;
     --uib-speed: 0.9s;
     --uib-color: #f9fafb;
     position: relative;

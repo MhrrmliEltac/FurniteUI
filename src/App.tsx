@@ -13,6 +13,8 @@ import UseCheckAuth from "./utils/UseCheckAuth";
 import AllProducts from "./components/pages/AllProducts";
 import Cart from "./components/pages/Cart";
 import "./assets/styles/home.css";
+import ForgotPassword from "./components/auth/ForgotPassword";
+import ResetPassword from "./components/auth/ResetPassword";
 
 const HomePage = lazy(() => import("./components/pages/Home"));
 const Navbar = lazy(() => import("./components/header/Navbar"));
@@ -43,6 +45,8 @@ const App = () => {
           <Route element={<AuthLayout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
           {/* Profile səhifəsi üçün route */}
           <Route element={<ProtectedLayout />}>

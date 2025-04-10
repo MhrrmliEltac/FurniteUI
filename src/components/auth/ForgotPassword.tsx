@@ -67,7 +67,7 @@ const ForgotPassword: React.FC = () => {
             Please enter your email address. You will receive a link to create a
             new password via email.
           </p>
-          <form className="w-full"> 
+          <form className="w-full">
             <FormControl
               sx={{
                 width: "100%",

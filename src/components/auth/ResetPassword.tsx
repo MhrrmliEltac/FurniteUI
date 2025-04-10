@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
 import { jwtDecode } from "jwt-decode";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../ui/button";
@@ -6,11 +6,32 @@ import { FormControl, FormLabel } from "@mui/material";
 import { Input } from "../ui/input";
 import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
+import { isAxiosError } from "axios";
+import { toast } from "sonner";
+import { api } from "@/utils/Api";
 import "../../assets/styles/resetpass.css";
 
 const ResetPassword: React.FC = () => {
+  const [pass, setPass] = useState<string>("");
   const token = sessionStorage.getItem("resetToken");
   const navigate = useNavigate();
+
+  const resetPassword = async (e: FormEvent) => {
+    e.preventDefault();
+    try {
+      const res = await api.post("/reset-password", {
+        token: token,
+        newPassword: pass,
+      });
+      toast.success(res.data.message);
+      navigate("/login");
+      sessionStorage.removeItem("resetToken");
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    }
+  };
 
   if (token) {
     const decodedToken: any = jwtDecode(token);
@@ -42,7 +63,7 @@ const ResetPassword: React.FC = () => {
           <p className="text-[12px] text-[#A3A3A3]">
             Please enter your new password.
           </p>
-          <form className="w-full">
+          <form className="w-full" onSubmit={resetPassword}>
             <FormControl
               sx={{
                 width: "100%",
@@ -67,6 +88,10 @@ const ResetPassword: React.FC = () => {
                   name="password"
                   id="password"
                   placeholder="Enter password"
+                  value={pass}
+                  onChange={(e: ChangeEvent<HTMLInputElement>) =>
+                    setPass(e.target.value)
+                  }
                 />
                 <Icon
                   icon="qlementine-icons:password-16"
@@ -76,8 +101,11 @@ const ResetPassword: React.FC = () => {
                   className="absolute top-1/2 left-2 -translate-y-1/2 icon"
                 />
               </div>
-              <Button className="bg-[#4F46E5] text-white btn cursor-pointer h-[45px] hover:bg-[#4338CA]">
-                Send Now
+              <Button
+                onClick={(e: FormEvent) => resetPassword(e)}
+                className="bg-[#4F46E5] text-white btn cursor-pointer h-[45px] hover:bg-[#4338CA]"
+              >
+                Reset Password
               </Button>
             </FormControl>
           </form>

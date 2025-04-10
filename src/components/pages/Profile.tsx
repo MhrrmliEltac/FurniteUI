@@ -293,7 +293,7 @@ const Profile: React.FC = () => {
                     Save Changes
                   </Button>
                   <Link
-                    to="/"
+                    to="/forgot-password"
                     className="font-semibold text-[18px] text-[#8A8A8A] link transition-all duration-200"
                   >
                     Forgot your password?

@@ -46,7 +46,9 @@ const ProductDetail = () => {
         setProductById(response);
       }
     } catch (error) {
-      console.error("Failed to fetch product:", error);
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
     }
   };
 
@@ -54,6 +56,30 @@ const ProductDetail = () => {
     try {
       const response = await dispatch(getViewedProduct());
       setViewed(response.payload);
+    } catch (error) {
+      if (isAxiosError(error)) {
+        toast.error(error.response?.data.message);
+      }
+    }
+  };
+
+  const addToCart = async (id: string | undefined) => {
+    try {
+      if (isAuth) {
+        const res = await axios.post(
+          "https://furniture-server-two.vercel.app/api/cart/add-cart",
+          {
+            productId: id,
+            quantity: quantity,
+          },
+          {
+            withCredentials: true,
+          }
+        );
+        toast.success(res.data.message);
+      } else {
+        toast.error("Unauthorized access!");
+      }
     } catch (error) {
       if (isAxiosError(error)) {
         toast.error(error.response?.data.message);
@@ -174,7 +200,10 @@ const ProductDetail = () => {
             </div>
             <div className="button-box">
               <div className="buttons">
-                <button className="first-btn">
+                <button
+                  className="first-btn"
+                  onClick={() => addToCart(productById?._id)}
+                >
                   Add to Cart{" "}
                   <Icon
                     icon="mingcute:shopping-bag-2-line"

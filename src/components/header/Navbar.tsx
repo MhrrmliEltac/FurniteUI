@@ -19,8 +19,8 @@ import {
 import axios, { isAxiosError } from "axios";
 import { Button } from "@mui/material";
 import { debounce } from "lodash";
-import "../../assets/styles/navbar.css";
 import { ProductDataType } from "@/types/Type";
+import "../../assets/styles/navbar.css";
 
 const Navbar = () => {
   const [burgerMenuOpen, setBurgerMenuOpen] = useState<boolean>(false);

@@ -2,8 +2,11 @@ import { Icon } from "@iconify/react/dist/iconify.js";
 import { motion } from "framer-motion";
 import { animation } from "../../utils/Animations";
 import HeroImage from "../../assets/images/Frame 427319350.png";
+import { useNavigate } from "react-router-dom";
 
 const Hero = () => {
+  const navigate = useNavigate();
+
   return (
     <motion.section
       variants={animation}
@@ -21,7 +24,12 @@ const Hero = () => {
           <li>Door Bell</li>
           <li>Space Solved</li>
         </ul>
-        <button className="overlay-btn">
+        <button
+          className="overlay-btn"
+          onClick={() => {
+            navigate("/products?category=Chair");
+          }}
+        >
           Buy Now{" "}
           <Icon
             icon="iconamoon:arrow-top-right-1-light"
